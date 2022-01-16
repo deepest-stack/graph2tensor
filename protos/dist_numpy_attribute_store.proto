@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package graph2tensor.client;
+import "ndarray.proto";
+
+service DistNumpyAttributeStore {
+
+  // lookup attributes of nodes
+  rpc lookup(NdarrayProto) returns (AttrProto) {}
+
+  // get all the attribute data of nodes
+  rpc get_attr_data(AttrRequest) returns (stream NdarrayProto) {}
+
+}
+
+message AttrProto {
+
+  // map from attribute name to attribute data
+  map<string, NdarrayProto> attrs = 1;
+
+}
+
+message AttrRequest {
+
+  // name of attribute
+  string name = 1;
+
+  // batch size
+  int32 batch_size = 2;
+}

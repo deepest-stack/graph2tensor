@@ -1,0 +1,1177 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Graph &mdash; graph2tensor v0.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Nodes &amp; Edges" href="graph2tensor.common.html" />
+    <link rel="prev" title="Welcome to graph2tensor’s documentation!" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> graph2tensor
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Graph</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#numpygraph-class">NumpyGraph Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#distnumpygraph-class">DistNumpyGraph Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#distnumpyattributestoreservicer-class">DistNumpyAttributeStoreServicer Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#distnumpyrelationstoreservicer-class">DistNumpyRelationStoreServicer Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.common.html">Nodes &amp; Edges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.egograph.html">EgoGraph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.sampler.html">Sampler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.converter.html">Converter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.interface.html">Top Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="serving.html">Serving</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">graph2tensor</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Graph</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/graph2tensor.client.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="graph">
+<h1>Graph<a class="headerlink" href="#graph" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="numpygraph-class">
+<h2>NumpyGraph Class<a class="headerlink" href="#numpygraph-class" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.client.</span></span><span class="sig-name descname"><span class="pre">NumpyGraph</span></span><a class="headerlink" href="#graph2tensor.client.NumpyGraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object for graph data manipulating.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.lookup_edges">
+<span class="sig-name descname"><span class="pre">lookup_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.lookup_edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lookup all the attributes of the given edges.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edges</strong> – a <a class="reference internal" href="graph2tensor.common.html#graph2tensor.common.Edges" title="graph2tensor.common.Edges"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.common.Edges</span></code></a> object, edges to lookup</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dict whose keys are attributes name and values are
+attributes value in numpy.ndarray format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.lookup_nodes">
+<span class="sig-name descname"><span class="pre">lookup_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.lookup_nodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lookup all the attributes of the given nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>nodes</strong> – a <a class="reference internal" href="graph2tensor.common.html#graph2tensor.common.Nodes" title="graph2tensor.common.Nodes"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.common.Nodes</span></code></a> object, nodes to lookup</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dict whose keys are attributes name and values are
+attributes value in numpy.ndarray format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.add_node">
+<span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labeled</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.add_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new type of node into graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_type</strong> – the type of node</p></li>
+<li><p><strong>attrs_info</strong> – name &amp; type of attributes of node, <cite>dict</cite> or <cite>list</cite> or <cite>tuple</cite>.
+For <cite>dict</cite>, the key should be attribute name and value be type.
+For <cite>list</cite> or <cite>tuple</cite>, each element should be a key-value pair,
+e.g. (attr_name, attr_type) or [attr_name, attr_type].
+In any situation above, the attribute type can be one of <cite>int</cite>,
+<cite>float</cite> or <cite>str</cite>, and for array, use <cite>int[N]</cite>, <cite>float[N]</cite> or <cite>str[N]</cite>
+in which <cite>N</cite> is the size of array,
+otherwise, a <cite>ValueError</cite> exception will be raised.</p></li>
+<li><p><strong>labeled</strong> – whether node is labeled</p></li>
+<li><p><strong>kwargs</strong> – other valid args: <cite>node_label</cite>, the data of node label in <cite>np.ndarray</cite>
+format when node is labeled; <cite>node_attrs</cite>, a <cite>dict</cite> whose keys are
+attribute names and values are attribute data in <cite>np.ndarray</cite> format</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.add_edge">
+<span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.add_edge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new type of edge into graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>edge_type</strong> – the type of edge</p></li>
+<li><p><strong>src_type</strong> – the type of source node</p></li>
+<li><p><strong>dst_type</strong> – the type of destination node</p></li>
+<li><p><strong>attrs_info</strong> – name &amp; type of attributes of edges, <cite>dict</cite> or <cite>list</cite> or <cite>tuple</cite>.
+For <cite>dict</cite>, the key should be attribute name and value be type.
+For <cite>list</cite> or <cite>tuple</cite>, each element should be a key-value pair,
+e.g. (attr_name, attr_type) or [attr_name, attr_type].
+In any situation above, the attribute type can only be one of <cite>int</cite>,
+<cite>float</cite> or <cite>str</cite>, and for array, use <cite>int[N]</cite>, <cite>float[N]</cite> or <cite>str[N]</cite>
+in which <cite>N</cite> is the size of array, otherwise, a <cite>ValueError</cite>
+exception will be raised.</p></li>
+<li><p><strong>directed</strong> – whether edge is directed, if not, an reversed edge will also be added,
+for undirected edge, the <cite>src_type</cite> and <cite>dst_type</cite> must be same, i.e.,
+the type of source node and destination node of undirected edge should
+be same. default to <cite>True</cite></p></li>
+<li><p><strong>kwargs</strong> – other valid args: <cite>src_ids</cite>, required, the ids of source nodes in <cite>np.ndarray</cite>
+format; <cite>dst_ids</cite>, required, the ids of destination nodes in <cite>np.ndarray</cite>
+format; <cite>edge_ids</cite>, optional, the ids of edges; <cite>edge_probs</cite>, the probabilities
+of edges, when sample neighbours along the edges using “topk” strategy,
+<cite>edge_probs</cite> is required and will be used to computed the topk neighbours,
+for “random” sampling strategy, <cite>edge_probs</cite> is optional, if specified, neighbours
+will be sampled based on edge probabilities, otherwise sampled uniformly;
+<cite>edge_attrs</cite>, a <cite>dict</cite> whose keys are attribute names and values are attribute
+data in <cite>np.ndarray</cite> format</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.get_edge_attr_data">
+<span class="sig-name descname"><span class="pre">get_edge_attr_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.get_edge_attr_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the data for attribute <cite>attr_name</cite> of the edge <cite>edge_type</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>edge_type</strong> – edge type</p></li>
+<li><p><strong>attr_name</strong> – attribute name</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the attribute data in np.ndarray format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.get_edge_ids">
+<span class="sig-name descname"><span class="pre">get_edge_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.get_edge_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get src_ids, dst_ids and edge_ids of all the edges with specified type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edge_type</strong> – edge type</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>src_ids, dst_ids and edge_ids, all in <cite>np.ndarray</cite> format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.get_edge_probs">
+<span class="sig-name descname"><span class="pre">get_edge_probs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.get_edge_probs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the edge probabilities of all the edges with specified type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edge_type</strong> – edge type</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the edge probabilities in <cite>np.ndarray</cite> format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.get_node_attr_data">
+<span class="sig-name descname"><span class="pre">get_node_attr_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.get_node_attr_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the data for attribute <cite>attr_name</cite> of the node <cite>node_type</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_type</strong> – node type</p></li>
+<li><p><strong>attr_name</strong> – attribute name</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the attribute data in np.ndarray format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.get_node_label">
+<span class="sig-name descname"><span class="pre">get_node_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.get_node_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the label of node <cite>node_type</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node_type</strong> – node type</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>node label in np.ndarray format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.to_config">
+<span class="sig-name descname"><span class="pre">to_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.to_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize object into dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a dict which could be used to deserialize</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.from_config">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialize object from dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> – config in <cite>dict</cite> format to deserialized from</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an instance of <cite>cls</cite> class</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.sample_neighbors">
+<span class="sig-name descname"><span class="pre">sample_neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'random'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.sample_neighbors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sample neighbors along with the specified edge according to the specified strategy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> – the id of src nodes</p></li>
+<li><p><strong>edge_type</strong> – the type of the edge to sample along with</p></li>
+<li><p><strong>num</strong> – the number of neighbors to sample for each node</p></li>
+<li><p><strong>strategy</strong> – sampling strategy, several strategies are supported and default as “random”.
+“random”: sample <cite>num</cite> neighbors randomly with/without replacement,
+“all”: sample all neighbors and ignore the <cite>num</cite> param,
+“topk”: sample <cite>num</cite> neighbors with highest edge weights,
+return all neighbors if not enough.</p></li>
+<li><p><strong>kwargs</strong> – other valid args: <cite>num_threads</cite>, specify the number of working threads;
+<cite>replace</cite>, whether the sample is with or without replacement, only valid
+for “random” sampling strategy; <cite>use_edge_probs</cite>, whether use edge probabilities
+as neighbour’s distribution, if not or edge probabilities is not found, uniform
+distribution will be applied, only valid for “random” sampling strategy.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A <a class="reference internal" href="graph2tensor.common.html#graph2tensor.common.Nodes" title="graph2tensor.common.Nodes"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.common.Nodes</span></code></a> object for neighbors,
+an <a class="reference internal" href="graph2tensor.common.html#graph2tensor.common.Edges" title="graph2tensor.common.Edges"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.common.Edges</span></code></a> object or <cite>None</cite> for edges.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.random_walk">
+<span class="sig-name descname"><span class="pre">random_walk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_length</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.random_walk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Walk <cite>walk_length</cite> steps from <cite>ids</cite> along with edge <cite>edge_type</cite> randomly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> – the id of nodes to start walk from</p></li>
+<li><p><strong>edge_type</strong> – the type of edge to walk along</p></li>
+<li><p><strong>walk_length</strong> – the length to walk</p></li>
+<li><p><strong>kwargs</strong> – other valid args: <cite>use_edge_probs</cite>, whether use edge probabilities
+as neighbour’s distribution, if not or edge probabilities is not found, uniform
+distribution will be applied; <cite>discard_frequent_nodes</cite>, whether or not discard
+frequent nodes; <cite>freq_th</cite>, the frequency threshold for frequent nodes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple whose element is list which representing a walk path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.node2vec_walk">
+<span class="sig-name descname"><span class="pre">node2vec_walk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_length</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.node2vec_walk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Walk <cite>walk_length</cite> steps from <cite>ids</cite> along with edge <cite>edge_type</cite> following
+the way described in <a class="reference external" href="https://arxiv.org/pdf/1607.00653.pdf">Node2Vec</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> – the id of nodes to start walk from</p></li>
+<li><p><strong>edge_type</strong> – the type of edge to walk along</p></li>
+<li><p><strong>walk_length</strong> – the length to walk</p></li>
+<li><p><strong>p</strong> – return parameter, see <a class="reference external" href="https://arxiv.org/pdf/1607.00653.pdf">Node2Vec</a>
+for more details</p></li>
+<li><p><strong>q</strong> – in-out parameter, see <a class="reference external" href="https://arxiv.org/pdf/1607.00653.pdf">Node2Vec</a>
+for more details</p></li>
+<li><p><strong>kwargs</strong> – other valid args: <cite>use_edge_probs</cite>, whether use edge probabilities
+as neighbour’s distribution, if not or edge probabilities is not found, uniform
+distribution will be applied; <cite>discard_frequent_nodes</cite>, whether or not discard
+frequent nodes; <cite>freq_th</cite>, the frequency threshold for frequent nodes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple whose element is list which representing a walk path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.get_dst_type">
+<span class="sig-name descname"><span class="pre">get_dst_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.get_dst_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of destination node of given edge type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edge_type</strong> – edge type</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the type of destination node of given edge type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.get_edge_attr_info">
+<span class="sig-name descname"><span class="pre">get_edge_attr_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.get_edge_attr_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the attribute name &amp; type of given edge type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edge_type</strong> – edge type</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dict whose keys are attributes name and values
+are attributes type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.get_node_attr_info">
+<span class="sig-name descname"><span class="pre">get_node_attr_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.get_node_attr_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the attribute name &amp; type of given node type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node_type</strong> – node type</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dict whose keys are attributes name and values
+are attributes type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.get_src_type">
+<span class="sig-name descname"><span class="pre">get_src_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.get_src_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of source node of given edge type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edge_type</strong> – edge type</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the type of source node of given edge type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.is_edge_directed">
+<span class="sig-name descname"><span class="pre">is_edge_directed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.is_edge_directed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether the edge is directed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edge_type</strong> – edge type</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>‘True` if edge is directed else <cite>False</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.is_node_labeled">
+<span class="sig-name descname"><span class="pre">is_node_labeled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#graph2tensor.client.NumpyGraph.is_node_labeled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether the node is labeled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node_type</strong> – node type</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>True</cite> if node is labeled else <cite>False</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="graph2tensor.client.NumpyGraph.schema">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">schema</span></span><em class="property"><span class="pre">:</span> <span class="pre">Dict[str,</span> <span class="pre">Dict[str,</span> <span class="pre">Dict[str,</span> <span class="pre">Any]]]</span></em><a class="headerlink" href="#graph2tensor.client.NumpyGraph.schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the schema of graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>schema of graph</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<p>An example of graph schema</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">graph2tensor.client</span> <span class="kn">import</span> <span class="n">BaseGraph</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">json</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">BaseGraph</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;employee&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">[(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;str&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;int&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;dept&quot;</span><span class="p">,</span> <span class="s2">&quot;str&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;salary&quot;</span><span class="p">,</span> <span class="s2">&quot;float&quot;</span><span class="p">)],</span>
+<span class="gp">... </span>    <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;dept&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">[(</span><span class="s2">&quot;num_employee&quot;</span><span class="p">,</span> <span class="s2">&quot;int&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;str&quot;</span><span class="p">)],</span>
+<span class="gp">... </span>    <span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;workmate&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;employee&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;employee&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">[],</span>
+<span class="gp">... </span>    <span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;is_header&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;employee&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;dept&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">[(</span><span class="s2">&quot;since&quot;</span><span class="p">,</span> <span class="s2">&quot;str&quot;</span><span class="p">),],</span>
+<span class="gp">... </span>    <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+<span class="go">{</span>
+<span class="go">    &quot;nodes&quot;: {</span>
+<span class="go">        &quot;employee&quot;: {</span>
+<span class="go">            &quot;labeled&quot;: true,</span>
+<span class="go">            &quot;attrs&quot;: {</span>
+<span class="go">                &quot;name&quot;: &quot;str&quot;,</span>
+<span class="go">                &quot;age&quot;: &quot;int&quot;,</span>
+<span class="go">                &quot;dept&quot;: &quot;str&quot;,</span>
+<span class="go">                &quot;salary&quot;: &quot;float&quot;</span>
+<span class="go">            }</span>
+<span class="go">        },</span>
+<span class="go">        &quot;dept&quot;: {</span>
+<span class="go">            &quot;labeled&quot;: false,</span>
+<span class="go">            &quot;attrs&quot;: {</span>
+<span class="go">                &quot;num_employee&quot;: &quot;int&quot;,</span>
+<span class="go">                &quot;name&quot;: &quot;str&quot;</span>
+<span class="go">            }</span>
+<span class="go">        }</span>
+<span class="go">    },</span>
+<span class="go">    &quot;edges&quot;: {</span>
+<span class="go">        &quot;workmate&quot;: {</span>
+<span class="go">            &quot;src_type&quot;: &quot;employee&quot;,</span>
+<span class="go">            &quot;dst_type&quot;: &quot;employee&quot;,</span>
+<span class="go">            &quot;directed&quot;: false,</span>
+<span class="go">            &quot;attrs&quot;: {}</span>
+<span class="go">        },</span>
+<span class="go">        &quot;is_header&quot;: {</span>
+<span class="go">            &quot;src_type&quot;: &quot;employee&quot;,</span>
+<span class="go">            &quot;dst_type&quot;: &quot;dept&quot;,</span>
+<span class="go">            &quot;directed&quot;: true,</span>
+<span class="go">            &quot;attrs&quot;: {</span>
+<span class="go">                &quot;since&quot;: &quot;str&quot;</span>
+<span class="go">            }</span>
+<span class="go">        }</span>
+<span class="go">    }</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="distnumpygraph-class">
+<h2>DistNumpyGraph Class<a class="headerlink" href="#distnumpygraph-class" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.client.distributed.</span></span><span class="sig-name descname"><span class="pre">DistNumpyGraph</span></span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>The client for distributed graph data manipulating.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.add_node">
+<span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labeled</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.add_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new type of node into graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_type</strong> – the type of node</p></li>
+<li><p><strong>attrs_info</strong> – name &amp; type of attributes of node, <cite>dict</cite> or <cite>list</cite> or <cite>tuple</cite>.
+For <cite>dict</cite>, the key should be attribute name and value be type.
+For <cite>list</cite> or <cite>tuple</cite>, each element should be a key-value pair,
+e.g. (attr_name, attr_type) or [attr_name, attr_type].
+In any situation above, the attribute type can be one of <cite>int</cite>,
+<cite>float</cite> or <cite>str</cite>, and for array, use <cite>int[N]</cite>, <cite>float[N]</cite> or <cite>str[N]</cite>
+in which <cite>N</cite> is the size of array,
+otherwise, a <cite>ValueError</cite> exception will be raised.</p></li>
+<li><p><strong>labeled</strong> – whether node is labeled</p></li>
+<li><p><strong>kwargs</strong> – other valid args: <cite>target</cite>, the target of the rpc server to fetch node
+attributes, see <a class="reference internal" href="#graph2tensor.client.distributed.DistNumpyAttributeStoreServicer" title="graph2tensor.client.distributed.DistNumpyAttributeStoreServicer"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.client.distributed.DistNumpyAttributeStoreServicer</span></code></a>
+for details</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.add_edge">
+<span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.add_edge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new type of edge into graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>edge_type</strong> – the type of edge</p></li>
+<li><p><strong>src_type</strong> – the type of source node</p></li>
+<li><p><strong>dst_type</strong> – the type of destination node</p></li>
+<li><p><strong>attrs_info</strong> – name &amp; type of attributes of edges, <cite>dict</cite> or <cite>list</cite> or <cite>tuple</cite>.
+For <cite>dict</cite>, the key should be attribute name and value be type.
+For <cite>list</cite> or <cite>tuple</cite>, each element should be a key-value pair,
+e.g. (attr_name, attr_type) or [attr_name, attr_type].
+In any situation above, the attribute type can only be one of <cite>int</cite>,
+<cite>float</cite> or <cite>str</cite>, and for array, use <cite>int[N]</cite>, <cite>float[N]</cite> or <cite>str[N]</cite>
+in which <cite>N</cite> is the size of array, otherwise, a <cite>ValueError</cite>
+exception will be raised.</p></li>
+<li><p><strong>directed</strong> – whether edge is directed, if not, an reversed edge will also be added,
+for undirected edge, the <cite>src_type</cite> and <cite>dst_type</cite> must be same, i.e.,
+the type of source node and destination node of undirected edge should
+be same. default to <cite>True</cite></p></li>
+<li><p><strong>kwargs</strong> – other valid args: <cite>relation_target</cite>, required, the target of rpc server
+to fetch the relation data of edge, see
+<a class="reference internal" href="#graph2tensor.client.distributed.DistNumpyRelationStoreServicer" title="graph2tensor.client.distributed.DistNumpyRelationStoreServicer"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.client.distributed.DistNumpyRelationStoreServicer</span></code></a>
+for details; <cite>attribute_target</cite>, the target of rpc server to fetch the
+attributes data of edge, see
+<a class="reference internal" href="#graph2tensor.client.distributed.DistNumpyAttributeStoreServicer" title="graph2tensor.client.distributed.DistNumpyAttributeStoreServicer"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.client.distributed.DistNumpyAttributeStoreServicer</span></code></a>
+for details</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.lookup_nodes">
+<span class="sig-name descname"><span class="pre">lookup_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.lookup_nodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lookup all the attributes of the given nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>nodes</strong> – a <a class="reference internal" href="graph2tensor.common.html#graph2tensor.common.Nodes" title="graph2tensor.common.Nodes"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.common.Nodes</span></code></a> object, nodes to lookup</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dict whose keys are attributes name and values are
+attributes value in numpy.ndarray format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.lookup_edges">
+<span class="sig-name descname"><span class="pre">lookup_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.lookup_edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lookup all the attributes of the given edges.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edges</strong> – a <a class="reference internal" href="graph2tensor.common.html#graph2tensor.common.Edges" title="graph2tensor.common.Edges"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.common.Edges</span></code></a> object, edges to lookup</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dict whose keys are attributes name and values are
+attributes value in numpy.ndarray format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.get_node_attr_data">
+<span class="sig-name descname"><span class="pre">get_node_attr_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.get_node_attr_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the data for attribute <cite>attr_name</cite> of the node <cite>node_type</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_type</strong> – node type</p></li>
+<li><p><strong>attr_name</strong> – attribute name</p></li>
+<li><p><strong>kwargs</strong> – other valid args: <cite>batch_size</cite>, the size of mini-batch, default to 4096</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a generator which yield the attribute data in np.ndarray format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.get_node_label">
+<span class="sig-name descname"><span class="pre">get_node_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.get_node_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the label of node <cite>node_type</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_type</strong> – node type</p></li>
+<li><p><strong>kwargs</strong> – other valid args: <cite>batch_size</cite>, the size of mini-batch, default to 4096</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a generator which yield node label in np.ndarray format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.get_edge_attr_data">
+<span class="sig-name descname"><span class="pre">get_edge_attr_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.get_edge_attr_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the data for attribute <cite>attr_name</cite> of the edge <cite>edge_type</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>edge_type</strong> – edge type</p></li>
+<li><p><strong>attr_name</strong> – attribute name</p></li>
+<li><p><strong>kwargs</strong> – other valid args: <cite>batch_size</cite>, the size of mini-batch, default to 4096</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a generator which yield the attribute data in np.ndarray format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.get_edge_ids">
+<span class="sig-name descname"><span class="pre">get_edge_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.get_edge_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get src_ids, dst_ids and edge_ids of all the edges with specified type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>edge_type</strong> – edge type</p></li>
+<li><p><strong>kwargs</strong> – other valid args: <cite>batch_size</cite>, the size of mini-batch, default to 4096</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a generator which yield src_ids, dst_ids and edge_ids,
+all in <cite>np.ndarray</cite> format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.get_edge_probs">
+<span class="sig-name descname"><span class="pre">get_edge_probs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.get_edge_probs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the edge probabilities of all the edges with specified type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>edge_type</strong> – edge type</p></li>
+<li><p><strong>kwargs</strong> – other valid args: <cite>batch_size</cite>, the size of mini-batch, default to 4096</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a generator which yield the edge probabilities in <cite>np.ndarray</cite> format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.sample_neighbors">
+<span class="sig-name descname"><span class="pre">sample_neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'random'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.sample_neighbors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sample neighbors along with the specified edge according to the specified strategy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> – the id of src or dst(when <cite>reverse</cite> is <cite>True</cite>) nodes</p></li>
+<li><p><strong>edge_type</strong> – the type of the edge to sample along with</p></li>
+<li><p><strong>num</strong> – the number of neighbors to sample for each node</p></li>
+<li><p><strong>strategy</strong> – sampling strategy, several strategies are supported and default as “random”.
+“random”: sample <cite>num</cite> neighbors randomly with/without replacement,
+“all”: sample all neighbors and ignore the <cite>num</cite> param,
+“topk”: sample <cite>num</cite> neighbors with highest edge weights,
+return all neighbors if not enough.</p></li>
+<li><p><strong>kwargs</strong> – other valid args: <cite>num_threads</cite>, specify the number of working threads;
+<cite>replace</cite>, whether the sample is with or without replacement, only valid
+for “random” sampling strategy;`use_edge_probs`, whether use edge probabilities
+as neighbour’s distribution, if not or edge probabilities is not found, uniform
+distribution will be applied, only valid for “random” sampling strategy.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A <a class="reference internal" href="graph2tensor.common.html#graph2tensor.common.Nodes" title="graph2tensor.common.Nodes"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.common.Nodes</span></code></a> object for neighbors,
+an <a class="reference internal" href="graph2tensor.common.html#graph2tensor.common.Edges" title="graph2tensor.common.Edges"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.common.Edges</span></code></a> object or <cite>None</cite> for edges.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.to_config">
+<span class="sig-name descname"><span class="pre">to_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.to_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize object into dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a dict which could be used to deserialize</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.from_config">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialize object from dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> – config in <cite>dict</cite> format to deserialized from</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an instance of <cite>cls</cite> class</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.random_walk">
+<span class="sig-name descname"><span class="pre">random_walk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_length</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.random_walk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Walk <cite>walk_length</cite> steps from <cite>ids</cite> along with edge <cite>edge_type</cite> randomly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> – the id of nodes to start walk from</p></li>
+<li><p><strong>edge_type</strong> – the type of edge to walk along</p></li>
+<li><p><strong>walk_length</strong> – the length to walk</p></li>
+<li><p><strong>kwargs</strong> – other valid args: <cite>use_edge_probs</cite>, whether use edge probabilities
+as neighbour’s distribution, if not or edge probabilities is not found, uniform
+distribution will be applied; <cite>discard_frequent_nodes</cite>, whether or not discard
+frequent nodes; <cite>freq_th</cite>, the frequency threshold for frequent nodes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple whose element is list which representing a walk path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.node2vec_walk">
+<span class="sig-name descname"><span class="pre">node2vec_walk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_length</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.node2vec_walk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Walk <cite>walk_length</cite> steps from <cite>ids</cite> along with edge <cite>edge_type</cite> following
+the way described in <a class="reference external" href="https://arxiv.org/pdf/1607.00653.pdf">Node2Vec</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> – the id of nodes to start walk from</p></li>
+<li><p><strong>edge_type</strong> – the type of edge to walk along</p></li>
+<li><p><strong>walk_length</strong> – the length to walk</p></li>
+<li><p><strong>p</strong> – return parameter, see <a class="reference external" href="https://arxiv.org/pdf/1607.00653.pdf">Node2Vec</a>
+for more details</p></li>
+<li><p><strong>q</strong> – in-out parameter, see <a class="reference external" href="https://arxiv.org/pdf/1607.00653.pdf">Node2Vec</a>
+for more details</p></li>
+<li><p><strong>kwargs</strong> – other valid args: <cite>use_edge_probs</cite>, whether use edge probabilities
+as neighbour’s distribution, if not or edge probabilities is not found, uniform
+distribution will be applied; <cite>discard_frequent_nodes</cite>, whether or not discard
+frequent nodes; <cite>freq_th</cite>, the frequency threshold for frequent nodes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple whose element is list which representing a walk path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.get_dst_type">
+<span class="sig-name descname"><span class="pre">get_dst_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.get_dst_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of destination node of given edge type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edge_type</strong> – edge type</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the type of destination node of given edge type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.get_edge_attr_info">
+<span class="sig-name descname"><span class="pre">get_edge_attr_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.get_edge_attr_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the attribute name &amp; type of given edge type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edge_type</strong> – edge type</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dict whose keys are attributes name and values
+are attributes type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.get_node_attr_info">
+<span class="sig-name descname"><span class="pre">get_node_attr_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.get_node_attr_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the attribute name &amp; type of given node type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node_type</strong> – node type</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dict whose keys are attributes name and values
+are attributes type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.get_src_type">
+<span class="sig-name descname"><span class="pre">get_src_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.get_src_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of source node of given edge type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edge_type</strong> – edge type</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the type of source node of given edge type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.is_edge_directed">
+<span class="sig-name descname"><span class="pre">is_edge_directed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.is_edge_directed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether the edge is directed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edge_type</strong> – edge type</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>‘True` if edge is directed else <cite>False</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.is_node_labeled">
+<span class="sig-name descname"><span class="pre">is_node_labeled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.is_node_labeled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether the node is labeled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node_type</strong> – node type</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>True</cite> if node is labeled else <cite>False</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyGraph.schema">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">schema</span></span><em class="property"><span class="pre">:</span> <span class="pre">Dict[str,</span> <span class="pre">Dict[str,</span> <span class="pre">Dict[str,</span> <span class="pre">Any]]]</span></em><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyGraph.schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the schema of graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>schema of graph</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<p>An example of graph schema</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">graph2tensor.client</span> <span class="kn">import</span> <span class="n">BaseGraph</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">json</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">BaseGraph</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;employee&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">[(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;str&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;int&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;dept&quot;</span><span class="p">,</span> <span class="s2">&quot;str&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;salary&quot;</span><span class="p">,</span> <span class="s2">&quot;float&quot;</span><span class="p">)],</span>
+<span class="gp">... </span>    <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;dept&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">[(</span><span class="s2">&quot;num_employee&quot;</span><span class="p">,</span> <span class="s2">&quot;int&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;str&quot;</span><span class="p">)],</span>
+<span class="gp">... </span>    <span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;workmate&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;employee&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;employee&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">[],</span>
+<span class="gp">... </span>    <span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;is_header&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;employee&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;dept&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">[(</span><span class="s2">&quot;since&quot;</span><span class="p">,</span> <span class="s2">&quot;str&quot;</span><span class="p">),],</span>
+<span class="gp">... </span>    <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+<span class="go">{</span>
+<span class="go">    &quot;nodes&quot;: {</span>
+<span class="go">        &quot;employee&quot;: {</span>
+<span class="go">            &quot;labeled&quot;: true,</span>
+<span class="go">            &quot;attrs&quot;: {</span>
+<span class="go">                &quot;name&quot;: &quot;str&quot;,</span>
+<span class="go">                &quot;age&quot;: &quot;int&quot;,</span>
+<span class="go">                &quot;dept&quot;: &quot;str&quot;,</span>
+<span class="go">                &quot;salary&quot;: &quot;float&quot;</span>
+<span class="go">            }</span>
+<span class="go">        },</span>
+<span class="go">        &quot;dept&quot;: {</span>
+<span class="go">            &quot;labeled&quot;: false,</span>
+<span class="go">            &quot;attrs&quot;: {</span>
+<span class="go">                &quot;num_employee&quot;: &quot;int&quot;,</span>
+<span class="go">                &quot;name&quot;: &quot;str&quot;</span>
+<span class="go">            }</span>
+<span class="go">        }</span>
+<span class="go">    },</span>
+<span class="go">    &quot;edges&quot;: {</span>
+<span class="go">        &quot;workmate&quot;: {</span>
+<span class="go">            &quot;src_type&quot;: &quot;employee&quot;,</span>
+<span class="go">            &quot;dst_type&quot;: &quot;employee&quot;,</span>
+<span class="go">            &quot;directed&quot;: false,</span>
+<span class="go">            &quot;attrs&quot;: {}</span>
+<span class="go">        },</span>
+<span class="go">        &quot;is_header&quot;: {</span>
+<span class="go">            &quot;src_type&quot;: &quot;employee&quot;,</span>
+<span class="go">            &quot;dst_type&quot;: &quot;dept&quot;,</span>
+<span class="go">            &quot;directed&quot;: true,</span>
+<span class="go">            &quot;attrs&quot;: {</span>
+<span class="go">                &quot;since&quot;: &quot;str&quot;</span>
+<span class="go">            }</span>
+<span class="go">        }</span>
+<span class="go">    }</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="distnumpyattributestoreservicer-class">
+<h2>DistNumpyAttributeStoreServicer Class<a class="headerlink" href="#distnumpyattributestoreservicer-class" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyAttributeStoreServicer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.client.distributed.</span></span><span class="sig-name descname"><span class="pre">DistNumpyAttributeStoreServicer</span></span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyAttributeStoreServicer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The server for node &amp; edge attributes fetching.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyAttributeStoreServicer.add_attr">
+<span class="sig-name descname"><span class="pre">add_attr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyAttributeStoreServicer.add_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new attribute into node or edge.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attr_name</strong> – attribute name</p></li>
+<li><p><strong>attr_data</strong> – attribute data in <cite>np.narray</cite> format</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyAttributeStoreServicer.add_label">
+<span class="sig-name descname"><span class="pre">add_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyAttributeStoreServicer.add_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add label into node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>labels</strong> – labels of node in <cite>np.narray</cite> format</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="distnumpyrelationstoreservicer-class">
+<h2>DistNumpyRelationStoreServicer Class<a class="headerlink" href="#distnumpyrelationstoreservicer-class" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.client.distributed.DistNumpyRelationStoreServicer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.client.distributed.</span></span><span class="sig-name descname"><span class="pre">DistNumpyRelationStoreServicer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_probs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.client.distributed.DistNumpyRelationStoreServicer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The server for edge relation data fetching.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src_ids</strong> – the ids of source nodes in <cite>np.ndarray</cite> format</p></li>
+<li><p><strong>dst_ids</strong> – the ids of destination nodes in <cite>np.ndarray</cite> format</p></li>
+<li><p><strong>edge_ids</strong> – the ids of edges, if not specified, a sequence from
+0 to number of edges will be generated as edges ids</p></li>
+<li><p><strong>edge_probs</strong> – the probabilities of edges, when sample neighbours
+along the edges using “topk” strategy, <cite>edge_probs</cite>
+is required and will be used to computed the topk neighbours,
+for “random” sampling strategy, <cite>edge_probs</cite> is optional,
+if specified, neighbours will be sampled based on edge
+probabilities, otherwise sampled uniformly</p></li>
+<li><p><strong>directed</strong> – whether edge is directed, if not, an reversed edge will also be added.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="graph2tensor.common.html" class="btn btn-neutral float-right" title="Nodes &amp; Edges" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to graph2tensor’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, liusx.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

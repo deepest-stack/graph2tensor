@@ -1,0 +1,595 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Top Level API &mdash; graph2tensor v0.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Serving" href="serving.html" />
+    <link rel="prev" title="Model" href="graph2tensor.model.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> graph2tensor
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.client.html">Graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.common.html">Nodes &amp; Edges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.egograph.html">EgoGraph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.sampler.html">Sampler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.converter.html">Converter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.model.html">Model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Top Level API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#graph-create-api">Graph Create API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#graph-to-dgl">graph_to_dgl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#graph-from-dgl">graph_from_dgl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#graph-from-pg">graph_from_pg</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#model-related-api">Model Related API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#build-model">build_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#train">train</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#evaluate">evaluate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#predict">predict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#predict-and-explain">predict_and_explain</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="serving.html">Serving</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">graph2tensor</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Top Level API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/graph2tensor.interface.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="top-level-api">
+<h1>Top Level API<a class="headerlink" href="#top-level-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="graph-create-api">
+<h2>Graph Create API<a class="headerlink" href="#graph-create-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="graph-to-dgl">
+<h3>graph_to_dgl<a class="headerlink" href="#graph-to-dgl" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="graph2tensor.interface.graph_to_dgl">
+<span class="sig-prename descclassname"><span class="pre">graph2tensor.interface.</span></span><span class="sig-name descname"><span class="pre">graph_to_dgl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="graph2tensor.client.html#graph2tensor.client.NumpyGraph" title="graph2tensor.client.numpy_graph.NumpyGraph"><span class="pre">graph2tensor.client.numpy_graph.NumpyGraph</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dgl.heterograph.DGLHeteroGraph</span></span></span><a class="headerlink" href="#graph2tensor.interface.graph_to_dgl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transfer a <a class="reference internal" href="graph2tensor.client.html#graph2tensor.client.NumpyGraph" title="graph2tensor.client.NumpyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.client.NumpyGraph</span></code></a> object into a
+heterogeneous &amp; directed <cite>DGLGraph</cite>.
+All the nodes &amp; edges attributes will be put into nodes &amp; edges data, the
+node label (if had) will also be put into nodes data with key “label”, and
+the edge probabilities (if had) into edges data with key “edge_probs”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>graph</strong> – a <a class="reference internal" href="graph2tensor.client.html#graph2tensor.client.NumpyGraph" title="graph2tensor.client.NumpyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.client.NumpyGraph</span></code></a> object</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a <cite>DGLGraph</cite> object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="graph-from-dgl">
+<h3>graph_from_dgl<a class="headerlink" href="#graph-from-dgl" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="graph2tensor.interface.graph_from_dgl">
+<span class="sig-prename descclassname"><span class="pre">graph2tensor.interface.</span></span><span class="sig-name descname"><span class="pre">graph_from_dgl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dgl_graph</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dgl.heterograph.DGLHeteroGraph</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="graph2tensor.client.html#graph2tensor.client.NumpyGraph" title="graph2tensor.client.numpy_graph.NumpyGraph"><span class="pre">graph2tensor.client.numpy_graph.NumpyGraph</span></a></span></span><a class="headerlink" href="#graph2tensor.interface.graph_from_dgl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transfer a <cite>DGLGraph</cite> object into <a class="reference internal" href="graph2tensor.client.html#graph2tensor.client.NumpyGraph" title="graph2tensor.client.NumpyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.client.NumpyGraph</span></code></a>.
+All the nodes &amp; edges data will be put into nodes &amp; edges attributes,
+except for node data “label” and edge data “edge_probs”, which will
+be taken as node label and edge probabilities respectively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dgl_graph</strong> – a <cite>DGLGraph</cite> object</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a <a class="reference internal" href="graph2tensor.client.html#graph2tensor.client.NumpyGraph" title="graph2tensor.client.NumpyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.client.NumpyGraph</span></code></a> object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="graph-from-pg">
+<h3>graph_from_pg<a class="headerlink" href="#graph-from-pg" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="graph2tensor.interface.graph_from_pg">
+<span class="sig-prename descclassname"><span class="pre">graph2tensor.interface.</span></span><span class="sig-name descname"><span class="pre">graph_from_pg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes_def</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges_def</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_host</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_port</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_database</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_user</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_password</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="graph2tensor.client.html#graph2tensor.client.NumpyGraph" title="graph2tensor.client.numpy_graph.NumpyGraph"><span class="pre">graph2tensor.client.numpy_graph.NumpyGraph</span></a></span></span><a class="headerlink" href="#graph2tensor.interface.graph_from_pg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build <a class="reference internal" href="graph2tensor.client.html#graph2tensor.client.NumpyGraph" title="graph2tensor.client.NumpyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.client.NumpyGraph</span></code></a> from Postgres or Greenplum.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph_name</strong> – database schema, it suppose that each graph has it own schema.</p></li>
+<li><p><strong>nodes_def</strong> – nodes definitions, see example below for more details</p></li>
+<li><p><strong>edges_def</strong> – edges definitions, see example below for more details</p></li>
+<li><p><strong>db_host</strong> – host of database</p></li>
+<li><p><strong>db_port</strong> – port of database</p></li>
+<li><p><strong>db_database</strong> – name of database instance</p></li>
+<li><p><strong>db_user</strong> – user of database</p></li>
+<li><p><strong>db_password</strong> – password of database</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a <a class="reference internal" href="graph2tensor.client.html#graph2tensor.client.NumpyGraph" title="graph2tensor.client.NumpyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.client.NumpyGraph</span></code></a> object</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nodes_def</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;nodeA&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;attrs&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;attr1&quot;</span><span class="p">,</span> <span class="s2">&quot;int&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;attr2&quot;</span><span class="p">,</span> <span class="s2">&quot;float&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;attr3&quot;</span><span class="p">,</span> <span class="s2">&quot;str&quot;</span><span class="p">)],</span>
+<span class="gp">... </span>        <span class="s2">&quot;labeled&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;node_label&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span>
+<span class="gp">... </span>    <span class="p">},</span>
+<span class="gp">... </span>    <span class="s2">&quot;nodeB&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;attrs&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;attr1&quot;</span><span class="p">,</span> <span class="s2">&quot;int&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;attr2&quot;</span><span class="p">,</span> <span class="s2">&quot;float&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;attr3&quot;</span><span class="p">,</span> <span class="s2">&quot;str&quot;</span><span class="p">)],</span>
+<span class="gp">... </span>        <span class="s2">&quot;labeled&quot;</span><span class="p">:</span> <span class="kc">False</span>
+<span class="gp">... </span>    <span class="p">}</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">edges_def</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;edgeA&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;src_type&quot;</span><span class="p">:</span> <span class="s2">&quot;nodeA&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;dst_type&quot;</span><span class="p">:</span> <span class="s2">&quot;nodeA&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;directed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;attrs&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;attr1&quot;</span><span class="p">,</span> <span class="s2">&quot;int&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;attr2&quot;</span><span class="p">,</span> <span class="s2">&quot;float&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;attr3&quot;</span><span class="p">,</span> <span class="s2">&quot;str&quot;</span><span class="p">)],</span>
+<span class="gp">... </span>        <span class="s2">&quot;edge_probs&quot;</span><span class="p">:</span> <span class="s2">&quot;prob_column&quot;</span>
+<span class="gp">... </span>    <span class="p">},</span>
+<span class="gp">... </span>    <span class="s2">&quot;edgeB&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;src_type&quot;</span><span class="p">:</span> <span class="s2">&quot;nodeA&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;dst_type&quot;</span><span class="p">:</span> <span class="s2">&quot;nodeB&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;directed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;attrs&quot;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="gp">... </span>    <span class="p">}</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph_from_pg</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">graph_name</span><span class="o">=</span><span class="s2">&quot;graph1&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">nodes_def</span><span class="o">=</span><span class="n">nodes_def</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">edges_def</span><span class="o">=</span><span class="n">edges_def</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">db_host</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">db_port</span><span class="o">=</span><span class="mi">15432</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">db_database</span><span class="o">=</span><span class="s2">&quot;gnn_dev&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">db_user</span><span class="o">=</span><span class="s2">&quot;gpadmin&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">db_password</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">default_int_attr</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">default_float_attr</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">default_str_attr</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="model-related-api">
+<h2>Model Related API<a class="headerlink" href="#model-related-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="build-model">
+<h3>build_model<a class="headerlink" href="#build-model" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="graph2tensor.interface.build_model">
+<span class="sig-prename descclassname"><span class="pre">graph2tensor.interface.</span></span><span class="sig-name descname"><span class="pre">build_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conv_layers_def</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_reduce_mode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_proc_layers_def</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduce_layer_def</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_layers_def</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concat_hidden</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="graph2tensor.model.html#graph2tensor.model.models.MessagePassing" title="graph2tensor.model.models.message_passing.MessagePassing"><span class="pre">graph2tensor.model.models.message_passing.MessagePassing</span></a></span></span><a class="headerlink" href="#graph2tensor.interface.build_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a <a class="reference internal" href="graph2tensor.model.html#graph2tensor.model.models.MessagePassing" title="graph2tensor.model.models.MessagePassing"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.model.models.MessagePassing</span></code></a> model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of model</p></li>
+<li><p><strong>conv_layers_def</strong> – convolution layers definitions, see example below for more details</p></li>
+<li><p><strong>attr_reduce_mode</strong> – how to reduce attributes of nodes/edges, expected ‘concat’,
+‘mean’ or ‘sum’</p></li>
+<li><p><strong>pre_proc_layers_def</strong> – pre-processing layers definitions, <cite>None</cite> means no pre-processing
+layer, see example below for more details</p></li>
+<li><p><strong>reduce_layer_def</strong> – reduce layer definition, receive a <cite>tuple</cite> whose 1st element is
+the class name of layer and 2nd element is the args for layer in
+<cite>dict</cite> format, or <cite>None</cite> means average reduction, see
+<a class="reference internal" href="graph2tensor.model.html#graph2tensor.model.models.MessagePassing" title="graph2tensor.model.models.MessagePassing"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.model.models.MessagePassing</span></code></a> for more details</p></li>
+<li><p><strong>out_layers_def</strong> – out layers definitions, <cite>None</cite> means no out layers,
+see example below for more details</p></li>
+<li><p><strong>concat_hidden</strong> – whether or not concatenate outputs of convolution layers</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a <a class="reference internal" href="graph2tensor.model.html#graph2tensor.model.models.MessagePassing" title="graph2tensor.model.models.MessagePassing"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.model.models.MessagePassing</span></code></a> object</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">conv_layers_def</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="p">[(</span><span class="s2">&quot;GCNConv&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;input_dims&quot;</span><span class="p">:</span><span class="mi">128</span><span class="o">+</span><span class="mi">32</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;units&quot;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;add_self_loop&quot;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;activation&quot;</span><span class="p">:</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;gcn1&quot;</span><span class="p">}),</span>
+<span class="gp">... </span>     <span class="p">(</span><span class="s2">&quot;GCNConv&quot;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="p">{</span><span class="s2">&quot;input_dims&quot;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s2">&quot;units&quot;</span><span class="p">:</span><span class="mi">64</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s2">&quot;add_self_loop&quot;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s2">&quot;activation&quot;</span><span class="p">:</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;gcn2&quot;</span><span class="p">})],</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pre_proc_layers_def</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s2">&quot;IntegerLookupEncoder&quot;</span><span class="p">,</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;year_lookup&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;cate_feat_def&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;vocabulary&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1971</span><span class="p">,</span> <span class="mi">1986</span><span class="p">,</span> <span class="mi">1987</span><span class="p">,</span> <span class="mi">1988</span><span class="p">]</span><span class="o">+</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1990</span><span class="p">,</span> <span class="mi">2021</span><span class="p">))}),</span> <span class="p">]}</span>
+<span class="gp">... </span>     <span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;EmbeddingEncoder&#39;</span><span class="p">,</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;year_emb&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;cate_feat_def&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;reduction&quot;</span><span class="p">:</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;input_dim&quot;</span><span class="p">:</span> <span class="mi">37</span><span class="p">,</span> <span class="s2">&quot;output_dim&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">}),</span> <span class="p">]}</span>
+<span class="gp">... </span>     <span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;AttrConcat&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;feat_concat&quot;</span><span class="p">}),</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reduce_layer_def</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out_layers_def</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;Dense&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;out1&quot;</span><span class="p">,</span> <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="mi">40</span><span class="p">}),</span> <span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">build_model</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;gcn_model&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">conv_layers_def</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s1">&#39;concat&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">pre_proc_layers_def</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">reduce_layer_def</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">out_layers_def</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">concat_hidden</span><span class="o">=</span><span class="kc">False</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="train">
+<h3>train<a class="headerlink" href="#train" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="graph2tensor.interface.train">
+<span class="sig-prename descclassname"><span class="pre">graph2tensor.interface.</span></span><span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_def</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_loop_def</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tensorboard_log_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.interface.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – <a class="reference internal" href="graph2tensor.model.html#graph2tensor.model.models.MessagePassing" title="graph2tensor.model.models.MessagePassing"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.model.models.MessagePassing</span></code></a> object, or other
+equivalent object of subclass of <cite>tf.keras.Model</cite></p></li>
+<li><p><strong>model_id</strong> – id of model</p></li>
+<li><p><strong>graph</strong> – a <a class="reference internal" href="graph2tensor.client.html#graph2tensor.client.NumpyGraph" title="graph2tensor.client.NumpyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.client.NumpyGraph</span></code></a> object to generate
+dataset from</p></li>
+<li><p><strong>dataset_def</strong> – dataset definition, see example below and
+<code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.model.data.DataGenerator</span></code> for more details</p></li>
+<li><p><strong>train_loop_def</strong> – train loop definition, see example below for more details</p></li>
+<li><p><strong>checkpoint_dir</strong> – directory to save checkpoints files</p></li>
+<li><p><strong>tensorboard_log_dir</strong> – directory to save tensorboard summary files</p></li>
+<li><p><strong>model_save_path</strong> – model save path</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>model_id passed and training history</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dataset_def</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;valid_size&quot;</span><span class="p">:</span> <span class="mf">.25</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;meta_paths&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;(paper)-[cites]-(paper)-[cites]-(paper)&quot;</span><span class="p">,</span> <span class="p">],</span>
+<span class="gp">... </span>    <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;include_edge&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;shuffle&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;sampler_process_num&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;converter_process_num&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;expand_factors&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;strategies&quot;</span><span class="p">:</span> <span class="s2">&quot;random&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">train_loop_def</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;Adam&quot;</span><span class="p">,</span> <span class="p">{}),</span>
+<span class="gp">... </span>    <span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;SparseCategoricalCrossentropy&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;from_logits&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}),</span>
+<span class="gp">... </span>    <span class="s2">&quot;metrics&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;SparseCategoricalAccuracy&quot;</span><span class="p">,</span> <span class="p">{}),</span> <span class="p">],</span>
+<span class="gp">... </span>    <span class="s2">&quot;epochs&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;checkpoint_save_freq&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;tensorboard_update_freq&quot;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model_id</span><span class="p">,</span> <span class="n">history</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;model_12345678&quot;</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">dataset_def</span><span class="p">,</span> <span class="n">train_loop_def</span><span class="p">,</span> <span class="s2">&quot;models/model_12345678&quot;</span><span class="p">,</span> <span class="s2">&quot;tensorboard_log/model_12345678&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="evaluate">
+<h3>evaluate<a class="headerlink" href="#evaluate" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="graph2tensor.interface.evaluate">
+<span class="sig-prename descclassname"><span class="pre">graph2tensor.interface.</span></span><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_def</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.interface.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate a model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – <a class="reference internal" href="graph2tensor.model.html#graph2tensor.model.models.MessagePassing" title="graph2tensor.model.models.MessagePassing"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.model.models.MessagePassing</span></code></a> object, or other
+equivalent object of subclass of <cite>tf.keras.Model</cite></p></li>
+<li><p><strong>graph</strong> – a <a class="reference internal" href="graph2tensor.client.html#graph2tensor.client.NumpyGraph" title="graph2tensor.client.NumpyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.client.NumpyGraph</span></code></a> object to generate
+dataset from</p></li>
+<li><p><strong>dataset_def</strong> – dataset definition, see example below and
+<code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.model.data.DataGenerator</span></code> for more details</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the value of metrics</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dataset_def</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;meta_paths&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;(paper)-[cites]-(paper)-[cites]-(paper)&quot;</span><span class="p">,</span> <span class="p">],</span>
+<span class="gp">... </span>    <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;include_edge&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;sampler_process_num&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;converter_process_num&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;expand_factors&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;strategies&quot;</span><span class="p">:</span> <span class="s2">&quot;random&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metrics</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">dataset_def</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="predict">
+<h3>predict<a class="headerlink" href="#predict" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="graph2tensor.interface.predict">
+<span class="sig-prename descclassname"><span class="pre">graph2tensor.interface.</span></span><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_def</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.interface.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict using a model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – <a class="reference internal" href="graph2tensor.model.html#graph2tensor.model.models.MessagePassing" title="graph2tensor.model.models.MessagePassing"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.model.models.MessagePassing</span></code></a> object, or other
+equivalent object of subclass of <cite>tf.keras.Model</cite></p></li>
+<li><p><strong>graph</strong> – a <a class="reference internal" href="graph2tensor.client.html#graph2tensor.client.NumpyGraph" title="graph2tensor.client.NumpyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.client.NumpyGraph</span></code></a> object to generate
+dataset from</p></li>
+<li><p><strong>dataset_def</strong> – dataset definition, see example below and
+<code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.model.data.DataGenerator</span></code> for more details</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the prediction results</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dataset_def</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;meta_paths&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;(paper)-[cites]-(paper)-[cites]-(paper)&quot;</span><span class="p">,</span> <span class="p">],</span>
+<span class="gp">... </span>    <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;include_edge&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;sampler_process_num&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;converter_process_num&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;expand_factors&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;strategies&quot;</span><span class="p">:</span> <span class="s2">&quot;random&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">predictions</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">dataset_def</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="predict-and-explain">
+<h3>predict_and_explain<a class="headerlink" href="#predict-and-explain" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="graph2tensor.interface.predict_and_explain">
+<span class="sig-prename descclassname"><span class="pre">graph2tensor.interface.</span></span><span class="sig-name descname"><span class="pre">predict_and_explain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_def</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prob_th</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.interface.predict_and_explain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict using <cite>model</cite> and explain result using <cite>explainer</cite> on <cite>graph</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – <a class="reference internal" href="graph2tensor.model.html#graph2tensor.model.models.MessagePassing" title="graph2tensor.model.models.MessagePassing"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.model.models.MessagePassing</span></code></a> object, or other
+equivalent object of subclass of <cite>tf.keras.Model</cite></p></li>
+<li><p><strong>graph</strong> – a <a class="reference internal" href="graph2tensor.client.html#graph2tensor.client.NumpyGraph" title="graph2tensor.client.NumpyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.client.NumpyGraph</span></code></a> object to generate
+dataset from</p></li>
+<li><p><strong>dataset_def</strong> – dataset definition, see example below and
+<code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.model.data.DataGenerator</span></code> for more details</p></li>
+<li><p><strong>explainer</strong> – explainer used to explain results</p></li>
+<li><p><strong>target_class</strong> – index of target class in predictions to explain</p></li>
+<li><p><strong>prob_th</strong> – the threshold of probability, only node with probability of <cite>target_class</cite>
+greater than <cite>prob_th</cite> would be explained</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the prediction results and its explanations</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dataset_def</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;meta_paths&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;(paper)-[cites]-(paper)-[cites]-(paper)&quot;</span><span class="p">,</span> <span class="p">],</span>
+<span class="gp">... </span>    <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;include_edge&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;sampler_process_num&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;converter_process_num&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;expand_factors&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;strategies&quot;</span><span class="p">:</span> <span class="s2">&quot;random&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">explanations</span> <span class="ow">in</span> <span class="n">predict_and_explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">dataset_def</span><span class="p">,</span> <span class="n">explainer</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">.9</span><span class="p">):</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="serving.html" class="btn btn-neutral float-right" title="Serving" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="graph2tensor.model.html" class="btn btn-neutral float-left" title="Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, liusx.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

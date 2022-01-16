@@ -1,0 +1,316 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Converter &mdash; graph2tensor v0.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Model" href="graph2tensor.model.html" />
+    <link rel="prev" title="Sampler" href="graph2tensor.sampler.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> graph2tensor
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.client.html">Graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.common.html">Nodes &amp; Edges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.egograph.html">EgoGraph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.sampler.html">Sampler</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Converter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ego2tensor-class">Ego2Tensor Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#skipgram-class">SkipGram Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.interface.html">Top Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="serving.html">Serving</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">graph2tensor</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Converter</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/graph2tensor.converter.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="converter">
+<h1>Converter<a class="headerlink" href="#converter" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ego2tensor-class">
+<h2>Ego2Tensor Class<a class="headerlink" href="#ego2tensor-class" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.converter.Ego2Tensor">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.converter.</span></span><span class="sig-name descname"><span class="pre">Ego2Tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_edge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.converter.Ego2Tensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object that convert ego-graph into tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> – the graph to lookup nodes &amp; edges attributes</p></li>
+<li><p><strong>include_edge</strong> – whether or not lookup edges attributes, if not, the <cite>src_ids</cite> and
+<cite>dst_ids</cite> will be put into hop as a <cite>np.ndarray</cite> with shape (num, 2)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.converter.Ego2Tensor.convert">
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">egograph</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="graph2tensor.egograph.html#graph2tensor.egograph.EgoGraph" title="graph2tensor.egograph.egograph.EgoGraph"><span class="pre">graph2tensor.egograph.egograph.EgoGraph</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#graph2tensor.converter.Ego2Tensor.convert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch weight &amp; attributes of nodes and edges in ego-graph and
+convert the ego-graph into format that could be feed into tensorflow</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>egograph</strong> – <a class="reference internal" href="graph2tensor.egograph.html#graph2tensor.egograph.EgoGraph" title="graph2tensor.egograph.EgoGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.egograph.EgoGraph</span></code></a> object</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>A tuple representation of sub-graph as (path#1, path#2, …, path#N).
+<cite>path#N</cite> is a tuple, representing a path in ego-graph, whose element – <cite>hop</cite>
+is triplet as (src, edge, dst, offset) and <cite>src</cite>/<cite>edge</cite>/<cite>dst</cite> is a dict
+with “weight” or attribute name as key and weight or attribute in
+<cite>numpy.ndarray</cite> format as value if <cite>include_edge</cite> set <cite>True</cite>,
+otherwise <cite>edge</cite> will be an empty numpy.ndarray,
+<cite>offset</cite> is the offset for <cite>src</cite>, <cite>edge</cite> and <cite>dst</cite>.</p>
+<p>e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="c1"># path#1</span>
+    <span class="p">((</span><span class="n">src</span><span class="p">,</span> <span class="n">edge</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span> <span class="c1">#hop#1</span>
+    <span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">edge</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>  <span class="c1">#hop#2</span>
+    <span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">edge</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">offset</span><span class="p">)),</span> <span class="c1">#hop#3</span>
+    <span class="c1"># path#2</span>
+    <span class="p">((</span><span class="n">src</span><span class="p">,</span> <span class="n">edge</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span> <span class="c1">#hop#1</span>
+    <span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">edge</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>  <span class="c1">#hop#2</span>
+    <span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">edge</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">offset</span><span class="p">)),</span> <span class="c1">#hop#3</span>
+    <span class="c1"># path#N</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="skipgram-class">
+<h2>SkipGram Class<a class="headerlink" href="#skipgram-class" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.converter.SkipGram">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.converter.</span></span><span class="sig-name descname"><span class="pre">SkipGram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negative_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.converter.SkipGram" title="Permalink to this definition">¶</a></dt>
+<dd><p>A converter which generate skip-grams (and negative samples) from paths.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_size</strong> – total numbers of nodes</p></li>
+<li><p><strong>window_size</strong> – the window size of skip-gram</p></li>
+<li><p><strong>negative_samples</strong> – how many negative nodes to sample for each target node</p></li>
+<li><p><strong>sampling_table</strong> – 1-d <cite>np.ndarray</cite> with length <cite>vocabulary_size</cite>, the
+distribution for negative sampling</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.converter.SkipGram.convert">
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paths</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.converter.SkipGram.convert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate skip-gram (and negative samples) from paths.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>paths</strong> – paths to generate skip-gram from</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(<cite>target</cite>, <cite>context</cite>, <cite>labels</cite>), <cite>target</cite> is 1-d <cite>np.ndarray</cite>,
+<cite>context</cite> is 2-d <cite>np.ndarray</cite> with shape (num_target, negative_samples+1)
+and <cite>labels</cite> is 2-d <cite>np.ndarray</cite> with same shape as <cite>context</cite> in which
+1-value indicate skip-gram, 0-value indicate negative nodes, thus, there
+exists only one 1-value in each row of <cite>labels</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="graph2tensor.model.html" class="btn btn-neutral float-right" title="Model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="graph2tensor.sampler.html" class="btn btn-neutral float-left" title="Sampler" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, liusx.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

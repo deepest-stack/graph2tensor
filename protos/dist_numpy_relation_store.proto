@@ -1,0 +1,108 @@
+syntax = "proto3";
+
+package graph2tensor.client;
+import "ndarray.proto";
+
+service DistNumpyRelationStore {
+
+  // get the src_ids, dst_ids & edge_ids of edges
+  rpc get_edge_ids(BatchingProto) returns (stream EdgeIdsProto) {}
+
+  // get the probabilities of edges
+  rpc get_edge_probs(BatchingProto) returns (stream NdarrayProto) {}
+
+  // sample all neighbors
+  rpc sample_all_neighbors(SamplingRequest) returns (HopProto) {}
+
+  // sample K neighbors with highest edge probabilities
+  rpc sample_topk_neighbors(SamplingRequest) returns (HopProto) {}
+
+  // sample neighbors randomly with/without replacement
+  rpc sample_neighbors_randomly(SamplingRequest) returns (HopProto) {}
+
+  // random walk
+  rpc random_walk(WalkRequest) returns (PathsProto) {}
+
+  // node2vec walk
+  rpc node2vec_walk(WalkRequest) returns (PathsProto) {}
+}
+
+
+message BatchingProto {
+
+  // batch size
+  int32 size = 1;
+}
+
+message SamplingRequest {
+
+  // the ids of nodes
+  NdarrayProto ids = 1;
+
+  // number of neighbours to sample
+  optional int32 n = 2;
+
+  // number of threads
+  optional int32 num_threads = 3;
+
+  // whether the sample is with or without replacement
+  optional bool replace = 4;
+
+  // whether or not use edge probabilities as neighbour distribution
+  optional bool use_edge_probs = 5;
+}
+
+message EdgeIdsProto {
+
+  // source nodes ids of edges
+  NdarrayProto src_ids = 1;
+
+  // destination nodes ids of edges
+  NdarrayProto dst_ids = 2;
+
+  // ids of edges
+  NdarrayProto edge_ids = 3;
+}
+
+
+message HopProto {
+
+  // ids of neighbours nodes
+  NdarrayProto nbr_ids = 1;
+
+  // offset
+  NdarrayProto offset = 2;
+
+  // ids of edges
+  optional NdarrayProto edge_ids = 3;
+}
+
+
+message WalkRequest {
+  // the ids of nodes
+  NdarrayProto ids = 1;
+
+  // length to walk
+  int32 walk_length = 2;
+
+  // p for node2vec walk
+  optional float p = 3;
+
+  // q for node2vec walk
+  optional float q = 4;
+
+  // whether or not discard frequent nodes
+  optional bool discard_frequent_nodes = 5;
+
+  // frequency threshold for frequent nodes
+  optional float freq_th = 6;
+
+  // whether or not use edge probabilities as neighbour distribution
+  optional bool use_edge_probs = 7;
+}
+
+
+message PathsProto {
+  // paths
+  string paths = 1;
+}

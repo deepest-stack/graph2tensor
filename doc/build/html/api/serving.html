@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Serving &mdash; graph2tensor v0.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Top Level API" href="graph2tensor.interface.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> graph2tensor
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.client.html">Graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.common.html">Nodes &amp; Edges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.egograph.html">EgoGraph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.sampler.html">Sampler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.converter.html">Converter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.interface.html">Top Level API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Serving</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#train">train</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#predict">predict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#predict-and-explain">predict_and_explain</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">graph2tensor</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Serving</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/serving.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="serving">
+<h1>Serving<a class="headerlink" href="#serving" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="train">
+<h2>train<a class="headerlink" href="#train" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.train">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_desc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_loop_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_from</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a training task.</p>
+<p>URL format:
+<a class="reference external" href="http://host:port/graph_name/train?model_id=model_id&amp;train_data=train_data&amp;test_data=test_data&amp;user_id=user_id&amp;train_loop_def=train_loop_def&amp;model_def=model_def&amp;start_from=start_from">http://host:port/graph_name/train?model_id=model_id&amp;train_data=train_data&amp;test_data=test_data&amp;user_id=user_id&amp;train_loop_def=train_loop_def&amp;model_def=model_def&amp;start_from=start_from</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_id</strong> – model identification</p></li>
+<li><p><strong>model_name</strong> – model name</p></li>
+<li><p><strong>model_desc</strong> – model description</p></li>
+<li><p><strong>graph_name</strong> – graph to fetch data from</p></li>
+<li><p><strong>train_data</strong> – list of date string, e.g., [‘2021-09-15’, ‘2021-10-21’], which specify the train data</p></li>
+<li><p><strong>test_data</strong> – list of date string, e.g., [‘2021-09-15’, ‘2021-10-21’], which specify the test data</p></li>
+<li><p><strong>user_id</strong> – specify the right point of time window in which data will be fetched</p></li>
+<li><p><strong>train_loop_def</strong> – training loop definition in JSON format, see example below for details</p></li>
+<li><p><strong>model_def</strong> – definition of model architecture in JSON format, see example below for details</p></li>
+<li><p><strong>start_from</strong> – specify the id of model which will be used as basic model to train incrementally from,
+if <cite>start_from</cite> was specified, <cite>train_loop_def</cite> and <cite>model_def</cite> will be ignored
+and the architecture of basic model will be used</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>model_id</cite>, <cite>model_status</cite> (<cite>0</cite> for succeed and <cite>-1</cite> for failed) and <cite>message</cite> in JSON format</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">json</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conv_layers_def</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="p">[(</span><span class="s2">&quot;GCNConv&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;input_dims&quot;</span><span class="p">:</span><span class="mi">128</span><span class="o">+</span><span class="mi">32</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;units&quot;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;add_self_loop&quot;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;activation&quot;</span><span class="p">:</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;gcn1&quot;</span><span class="p">}),</span>
+<span class="gp">... </span>     <span class="p">(</span><span class="s2">&quot;GCNConv&quot;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="p">{</span><span class="s2">&quot;input_dims&quot;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s2">&quot;units&quot;</span><span class="p">:</span><span class="mi">64</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s2">&quot;add_self_loop&quot;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s2">&quot;activation&quot;</span><span class="p">:</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;gcn2&quot;</span><span class="p">})],</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pre_proc_layers_def</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s2">&quot;IntegerLookupEncoder&quot;</span><span class="p">,</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;year_lookup&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;cate_feat_def&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;vocabulary&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1971</span><span class="p">,</span> <span class="mi">1986</span><span class="p">,</span> <span class="mi">1987</span><span class="p">,</span> <span class="mi">1988</span><span class="p">]</span><span class="o">+</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1990</span><span class="p">,</span> <span class="mi">2021</span><span class="p">))}),</span> <span class="p">]}</span>
+<span class="gp">... </span>     <span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;EmbeddingEncoder&#39;</span><span class="p">,</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;year_emb&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;cate_feat_def&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;reduction&quot;</span><span class="p">:</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;input_dim&quot;</span><span class="p">:</span> <span class="mi">37</span><span class="p">,</span> <span class="s2">&quot;output_dim&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">}),</span> <span class="p">]}</span>
+<span class="gp">... </span>     <span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;AttrConcat&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;feat_concat&quot;</span><span class="p">}),</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reduce_layer_def</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out_layers_def</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;Dense&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;out1&quot;</span><span class="p">,</span> <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="mi">40</span><span class="p">}),</span> <span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model_def</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s2">&quot;conv_layers_def&quot;</span><span class="p">:</span> <span class="n">conv_layers_def</span><span class="p">,</span> <span class="s2">&quot;pre_proc_layers_def&quot;</span><span class="p">:</span> <span class="n">pre_proc_layers_def</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;reduce_layer_def&quot;</span><span class="p">:</span> <span class="n">reduce_layer_def</span><span class="p">,</span> <span class="s2">&quot;out_layers_def&quot;</span><span class="p">:</span> <span class="n">out_layers_def</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">train_loop_def</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+<span class="gp">... </span>    <span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;Adam&quot;</span><span class="p">,</span> <span class="p">{}),</span>
+<span class="gp">... </span>    <span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;SparseCategoricalCrossentropy&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;from_logits&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}),</span>
+<span class="gp">... </span>    <span class="s2">&quot;metrics&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;SparseCategoricalAccuracy&quot;</span><span class="p">,</span> <span class="p">{}),</span> <span class="p">],</span>
+<span class="gp">... </span>    <span class="s2">&quot;epochs&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;checkpoint_save_freq&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;tensorboard_update_freq&quot;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="gp">... </span><span class="p">})</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="predict">
+<h2>predict<a class="headerlink" href="#predict" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.predict">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a prediction task.
+URL format:
+<a class="reference external" href="http://host:port/graph_name/predict?task_id=task_id&amp;model_id=model_id&amp;predict_data=predict_data">http://host:port/graph_name/predict?task_id=task_id&amp;model_id=model_id&amp;predict_data=predict_data</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>task_id</strong> – id to track task</p></li>
+<li><p><strong>graph_name</strong> – graph to fetch data from</p></li>
+<li><p><strong>model_id</strong> – id of model to use</p></li>
+<li><p><strong>predict_data</strong> – date string, e.g., ‘2021-09-15’, which specify the predict data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>task_id</cite>, <cite>task_status</cite> (<cite>0</cite> for succeed and <cite>-1</cite> for failed) and <cite>message</cite> in JSON format</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="predict-and-explain">
+<h2>predict_and_explain<a class="headerlink" href="#predict-and-explain" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.predict_and_explain">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">predict_and_explain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prob_th</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.predict_and_explain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a prediction task explain its result.
+URL format:
+<a class="reference external" href="http://host:port/graph_name/predict_and_explain?task_id=task_id&amp;model_id=model_id&amp;predict_data=predict_data&amp;target_class=target_class&amp;prob_th=prob_th">http://host:port/graph_name/predict_and_explain?task_id=task_id&amp;model_id=model_id&amp;predict_data=predict_data&amp;target_class=target_class&amp;prob_th=prob_th</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>task_id</strong> – id to track task</p></li>
+<li><p><strong>graph_name</strong> – graph to fetch data from</p></li>
+<li><p><strong>model_id</strong> – id of model to use</p></li>
+<li><p><strong>predict_data</strong> – date string, e.g., ‘2021-09-15’, which specify the predict data</p></li>
+<li><p><strong>target_class</strong> – index of target class in predictions to explain</p></li>
+<li><p><strong>prob_th</strong> – the threshold of probability, only node with probability of <cite>target_class</cite>
+greater than <cite>prob_th</cite> would be explained</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>task_id</cite>, <cite>task_status</cite> (<cite>0</cite> for succeed and <cite>-1</cite> for failed) and <cite>message</cite> in JSON format</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="graph2tensor.interface.html" class="btn btn-neutral float-left" title="Top Level API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, liusx.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

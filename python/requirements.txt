@@ -1,0 +1,9 @@
+psycopg2==2.8.6
+dgl==0.6.1
+pandas==1.2.4
+numpy==1.19.5
+regex==2021.4.4
+tensorflow-gpu==2.6.0
+scikit-learn==0.24.1
+scipy==1.6.2
+grpcio==1.38.1

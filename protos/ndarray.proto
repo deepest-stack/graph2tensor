@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package graph2tensor.client;
+
+
+message NdarrayProto {
+
+  // dtype of ndarray
+  string dtype = 1;
+
+  // dimension
+  repeated int32 dims = 2 [packed = true];
+
+  // array content in byte format
+  bytes array_content = 3;
+}
+

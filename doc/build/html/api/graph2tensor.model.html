@@ -1,0 +1,1037 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Model &mdash; graph2tensor v0.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Top Level API" href="graph2tensor.interface.html" />
+    <link rel="prev" title="Converter" href="graph2tensor.converter.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> graph2tensor
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.client.html">Graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.common.html">Nodes &amp; Edges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.egograph.html">EgoGraph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.sampler.html">Sampler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.converter.html">Converter</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#data">data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#egotensorgenerator-class">EgoTensorGenerator Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#skipgramgenerator4deepwalk-class">SkipGramGenerator4DeepWalk Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#skipgramgenerator4node2vec-class">SkipGramGenerator4Node2Vec Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#skipgramgenerator4metapath2vec-class">SkipGramGenerator4MetaPath2Vec Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#layers">layers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gcnconv-class">GCNConv Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ginconv-class">GINConv Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gatconv-class">GATConv Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rgcnconv-class">RGCNConv Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unimp-class">UniMP Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embeddingencoder-class">EmbeddingEncoder Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#onehotencoder-class">OnehotEncoder Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#integerlookupencoder-class">IntegerLookupEncoder Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stringlookupencoder-class">StringLookupEncoder Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#attrcompact-class">AttrCompact Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#explainers">explainers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#integratedgradients-class">IntegratedGradients Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#models">models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#messagepassing-class">MessagePassing Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deepwalk-class">DeepWalk Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#node2vec-class">Node2Vec Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#metapath2vec-class">MetaPath2Vec Class</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.interface.html">Top Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="serving.html">Serving</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">graph2tensor</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/graph2tensor.model.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="model">
+<h1>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="data">
+<h2>data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="egotensorgenerator-class">
+<h3>EgoTensorGenerator Class<a class="headerlink" href="#egotensorgenerator-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.data.EgoTensorGenerator">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.data.</span></span><span class="sig-name descname"><span class="pre">EgoTensorGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expand_factors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'random'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_edge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampler_process_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">converter_process_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.data.EgoTensorGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A callable object returning a generator which yield ego-graph
+that can be feed into tensorflow models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> – graph that generate ego-graph from</p></li>
+<li><p><strong>meta_paths</strong> – the meta_paths that sample along,
+see <a class="reference internal" href="graph2tensor.sampler.html#graph2tensor.sampler.MetaPathSampler" title="graph2tensor.sampler.MetaPathSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.sampler.MetaPathSampler</span></code></a> for details</p></li>
+<li><p><strong>sampler_process_num</strong> – the number of sampler processes</p></li>
+<li><p><strong>converter_process_num</strong> – the number of converter processes</p></li>
+<li><p><strong>expand_factors</strong> – see <a class="reference internal" href="graph2tensor.sampler.html#graph2tensor.sampler.MetaPathSampler" title="graph2tensor.sampler.MetaPathSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.sampler.MetaPathSampler</span></code></a> for details</p></li>
+<li><p><strong>strategies</strong> – see <a class="reference internal" href="graph2tensor.sampler.html#graph2tensor.sampler.MetaPathSampler" title="graph2tensor.sampler.MetaPathSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.sampler.MetaPathSampler</span></code></a> for details</p></li>
+<li><p><strong>include_edge</strong> – see <a class="reference internal" href="graph2tensor.converter.html#graph2tensor.converter.Ego2Tensor" title="graph2tensor.converter.Ego2Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.converter.Ego2Tensor</span></code></a> for details</p></li>
+</ul>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">EgoTensorGenerator</span><span class="p">(</span>
+<span class="gp">... </span>           <span class="n">graph</span><span class="o">=</span><span class="n">g</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="n">meta_paths</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;(paper) -[cite]- (paper) -[cite]- (paper)&quot;</span><span class="p">],</span>
+<span class="gp">... </span>           <span class="n">sampler_process_num</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="n">converter_process_num</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="n">expand_factors</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="n">strategies</span><span class="o">=</span><span class="s2">&quot;random&quot;</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="n">include_edge</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">data_gen</span><span class="p">:</span>
+<span class="gp">... </span>       <span class="n">ds</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_generator</span><span class="p">(</span>
+<span class="gp">... </span>           <span class="n">data_gen</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">169343</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">169343</span><span class="p">)),</span>
+<span class="gp">... </span>           <span class="n">output_signature</span><span class="o">=</span><span class="n">output_signature</span>
+<span class="gp">... </span>       <span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="skipgramgenerator4deepwalk-class">
+<h3>SkipGramGenerator4DeepWalk Class<a class="headerlink" href="#skipgramgenerator4deepwalk-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.data.SkipGramGenerator4DeepWalk">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.data.</span></span><span class="sig-name descname"><span class="pre">SkipGramGenerator4DeepWalk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocabulary_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_edge_probs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discard_frequent_nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq_th</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negative_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampler_process_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">converter_process_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.data.SkipGramGenerator4DeepWalk" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generator which yield skip-grams.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> – graph to generate from</p></li>
+<li><p><strong>edge_type</strong> – edge type</p></li>
+<li><p><strong>vocabulary_size</strong> – total number of nodes</p></li>
+<li><p><strong>walk_length</strong> – length to walk</p></li>
+<li><p><strong>use_edge_probs</strong> – whether use edge probabilities as neighbour’s distribution,
+if not or edge probabilities is not found, uniform
+distribution will be applied</p></li>
+<li><p><strong>discard_frequent_nodes</strong> – whether or not discard frequent nodes</p></li>
+<li><p><strong>freq_th</strong> – the frequency threshold for frequent nodes</p></li>
+<li><p><strong>window_size</strong> – the window size of skip-gram</p></li>
+<li><p><strong>negative_samples</strong> – how many negative nodes to sample for each target node</p></li>
+<li><p><strong>sampling_table</strong> – 1-d <cite>np.ndarray</cite> with length <cite>vocabulary_size</cite>, the
+distribution for negative sampling, if not specified,
+uniform distribution will be applied.</p></li>
+<li><p><strong>sampler_process_num</strong> – the number of sampler processes</p></li>
+<li><p><strong>converter_process_num</strong> – the number of converter processes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">SkipGramGenerator4DeepWalk</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">graph</span><span class="o">=</span><span class="n">g</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">edge_type</span><span class="o">=</span><span class="s1">&#39;cites&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">vocabulary_size</span><span class="o">=</span><span class="mi">169343</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">negative_samples</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">sampling_table</span><span class="o">=</span><span class="n">sampling_table</span><span class="p">)</span> <span class="k">as</span> <span class="n">data_gen</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">ds</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_generator</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">data_gen</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="mi">40960</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="n">output_signature</span><span class="o">=</span><span class="p">((</span><span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>
+<span class="gp">... </span>                            <span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">4</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int64</span><span class="p">)),</span>
+<span class="gp">... </span>                          <span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">4</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span>    <span class="n">deepwalk</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="skipgramgenerator4node2vec-class">
+<h3>SkipGramGenerator4Node2Vec Class<a class="headerlink" href="#skipgramgenerator4node2vec-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.data.SkipGramGenerator4Node2Vec">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.data.</span></span><span class="sig-name descname"><span class="pre">SkipGramGenerator4Node2Vec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocabulary_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_edge_probs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discard_frequent_nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq_th</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negative_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampler_process_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">converter_process_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.data.SkipGramGenerator4Node2Vec" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generator which yield skip-grams.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> – graph to generate from</p></li>
+<li><p><strong>edge_type</strong> – edge type</p></li>
+<li><p><strong>vocabulary_size</strong> – total number of nodes</p></li>
+<li><p><strong>walk_length</strong> – length to walk</p></li>
+<li><p><strong>p</strong> – return parameter, see <a class="reference external" href="https://arxiv.org/pdf/1607.00653.pdf">Node2Vec</a>
+for more details, only valid for ‘Node2VecWalker’</p></li>
+<li><p><strong>q</strong> – in-out parameter, see <a class="reference external" href="https://arxiv.org/pdf/1607.00653.pdf">Node2Vec</a>
+for more details, only valid for ‘Node2VecWalker’</p></li>
+<li><p><strong>use_edge_probs</strong> – whether use edge probabilities as neighbour’s distribution,
+if not or edge probabilities is not found, uniform
+distribution will be applied</p></li>
+<li><p><strong>discard_frequent_nodes</strong> – whether or not discard frequent nodes</p></li>
+<li><p><strong>freq_th</strong> – the frequency threshold for frequent nodes</p></li>
+<li><p><strong>window_size</strong> – the window size of skip-gram</p></li>
+<li><p><strong>negative_samples</strong> – how many negative nodes to sample for each target node</p></li>
+<li><p><strong>sampling_table</strong> – 1-d <cite>np.ndarray</cite> with length <cite>vocabulary_size</cite>, the
+distribution for negative sampling, if not specified,
+uniform distribution will be applied.</p></li>
+<li><p><strong>sampler_process_num</strong> – the number of sampler processes</p></li>
+<li><p><strong>converter_process_num</strong> – the number of converter processes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">SkipGramGenerator4Node2Vec</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">graph</span><span class="o">=</span><span class="n">g</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">edge_type</span><span class="o">=</span><span class="s1">&#39;cites&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">vocabulary_size</span><span class="o">=</span><span class="mi">169343</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">negative_samples</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">sampling_table</span><span class="o">=</span><span class="n">sampling_table</span><span class="p">)</span> <span class="k">as</span> <span class="n">data_gen</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">ds</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_generator</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">data_gen</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="mi">40960</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="n">output_signature</span><span class="o">=</span><span class="p">((</span><span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>
+<span class="gp">... </span>                            <span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">4</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int64</span><span class="p">)),</span>
+<span class="gp">... </span>                          <span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">4</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span>    <span class="n">node2vec</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="skipgramgenerator4metapath2vec-class">
+<h3>SkipGramGenerator4MetaPath2Vec Class<a class="headerlink" href="#skipgramgenerator4metapath2vec-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.data.SkipGramGenerator4MetaPath2Vec">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.data.</span></span><span class="sig-name descname"><span class="pre">SkipGramGenerator4MetaPath2Vec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocabulary_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negative_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampler_process_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">converter_process_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.data.SkipGramGenerator4MetaPath2Vec" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generator which yield skip-grams.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> – graph to generate from</p></li>
+<li><p><strong>edge_type</strong> – edge type</p></li>
+<li><p><strong>vocabulary_size</strong> – total number of nodes</p></li>
+<li><p><strong>walk_length</strong> – length to walk</p></li>
+<li><p><strong>window_size</strong> – the window size of skip-gram</p></li>
+<li><p><strong>negative_samples</strong> – how many negative nodes to sample for each target node</p></li>
+<li><p><strong>sampling_table</strong> – 1-d <cite>np.ndarray</cite> with length <cite>vocabulary_size</cite>, the
+distribution for negative sampling, if not specified,
+uniform distribution will be applied.</p></li>
+<li><p><strong>sampler_process_num</strong> – the number of sampler processes</p></li>
+<li><p><strong>converter_process_num</strong> – the number of converter processes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">SkipGramGenerator4MetaPath2Vec</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">graph</span><span class="o">=</span><span class="n">g</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">edge_type</span><span class="o">=</span><span class="s1">&#39;cites&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">vocabulary_size</span><span class="o">=</span><span class="mi">169343</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">negative_samples</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">sampling_table</span><span class="o">=</span><span class="n">sampling_table</span><span class="p">)</span> <span class="k">as</span> <span class="n">data_gen</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">ds</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_generator</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">data_gen</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="mi">40960</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="n">output_signature</span><span class="o">=</span><span class="p">((</span><span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>
+<span class="gp">... </span>                            <span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">4</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int64</span><span class="p">)),</span>
+<span class="gp">... </span>                          <span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">4</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span>    <span class="n">metapath2vec</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="layers">
+<h2>layers<a class="headerlink" href="#layers" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="gcnconv-class">
+<h3>GCNConv Class<a class="headerlink" href="#gcnconv-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.layers.GCNConv">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.layers.</span></span><span class="sig-name descname"><span class="pre">GCNConv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.layers.GCNConv" title="Permalink to this definition">¶</a></dt>
+<dd><p>GCN convolution layer</p>
+<div class="math notranslate nohighlight">
+\[h_i^{(l+1)} = h_i^{(l)} + avg(\mathbf{W} h_j^{(l)} + b, j \in \mathcal{N}_i)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>units</strong> – number of hidden units</p></li>
+<li><p><strong>add_self_loop</strong> – whether add self loop to each node, default to <cite>True</cite></p></li>
+<li><p><strong>activation</strong> – layer activation, <cite>str</cite> or <cite>tf.keras.activations</cite> object,
+default to linear activation</p></li>
+<li><p><strong>use_bias</strong> – whether add bias or not, default to <cite>True</cite></p></li>
+<li><p><strong>kwargs</strong> – args passed to <cite>tf.keras.layers.Layer</cite></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="ginconv-class">
+<h3>GINConv Class<a class="headerlink" href="#ginconv-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.layers.GINConv">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.layers.</span></span><span class="sig-name descname"><span class="pre">GINConv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.layers.GINConv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Graph Isomorphism Network layer.</p>
+<div class="math notranslate nohighlight">
+\[h_v^{(k)} = MLP^{(k)}((1+\epsilon^{(k)}) \cdot h_v^{(k-1)}
++ aggr(\{h_u^{(k-1)},{u\in \mathcal{N}(v)}\})\]</div>
+<p>or</p>
+<div class="math notranslate nohighlight">
+\[h_v^{(k)} = MLP^{(k)}((1+\epsilon^{(k)}) \cdot h_v^{(k-1)}
++ aggr(\{w_{uv}h_u^{(k-1)},{u\in \mathcal{N}(v)}\})\]</div>
+<p>if edge weight is available</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>init_eps</strong> – the initial epsilon value, default to 0</p></li>
+<li><p><strong>aggr_type</strong> – how to aggregate message from neighbours, expected “max”, “mean”
+or “sum”, default to “max”</p></li>
+<li><p><strong>mlp_units</strong> – <cite>int</cite> or <cite>list</cite> of integer, the units of each layer in mlp, an
+<cite>int</cite> value will define a 1-layer mlp, default to 32</p></li>
+<li><p><strong>mlp_activations</strong> – <cite>str</cite> or <cite>tf.keras.activations</cite> object, or list of it, the
+activation of each layer in mlp, default to linear activation</p></li>
+<li><p><strong>kwargs</strong> – args passed to <cite>tf.keras.layers.Layer</cite></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="gatconv-class">
+<h3>GATConv Class<a class="headerlink" href="#gatconv-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.layers.GATConv">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.layers.</span></span><span class="sig-name descname"><span class="pre">GATConv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.layers.GATConv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Graph Attention Convolution layer.</p>
+<div class="math notranslate nohighlight">
+\[\overrightarrow{h_i^{\prime}} =
+\sigma (\sum_{j \in \mathcal{N}_i \cup \{i\}} \alpha_{ij} \mathbf{W} \overrightarrow{h_j})\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\alpha_{ij} = \frac{exp(LeakyReLU(\overrightarrow{\mathbf{a}}^T
+[\mathbf{W}\overrightarrow{h_i}||\mathbf{W}\overrightarrow{h_j}]))}
+{\sum_{k\in\mathcal{N}_i\cup\{i\}}exp(LeakyReLU(\overrightarrow{\mathbf{a}}^T
+[\mathbf{W}\overrightarrow{h_i}||\mathbf{W}\overrightarrow{h_k}]))}\]</div>
+<p>For multi-heads attention, when “mean” reduction is applied,</p>
+<div class="math notranslate nohighlight">
+\[\overrightarrow{h_i^{\prime}} =
+\sigma (\frac{1}{K}\sum_{k=1}^K\sum_{j \in \mathcal{N}_i \cup \{i\}}
+\alpha_{ij}^k \mathbf{W}^k \overrightarrow{h_j})\]</div>
+<p>which activate after averaging, and</p>
+<div class="math notranslate nohighlight">
+\[\overrightarrow{h_i^{\prime}} =
+\mathop{||}\limits_{k=1}^{K} \sigma (\sum_{j \in \mathcal{N}_i \cup \{i\}}
+\alpha_{ij}^k \mathbf{W}^k \overrightarrow{h_j})\]</div>
+<p>when “concat” reduction is applied, which concatenate after activation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>units</strong> – number of hidden units</p></li>
+<li><p><strong>num_heads</strong> – number of attention headers, default to 1</p></li>
+<li><p><strong>negative_slope</strong> – negative slope of the <cite>leaky_relu</cite> activation to attention,
+default to 0.2</p></li>
+<li><p><strong>activation</strong> – layer activation, <cite>str</cite> or <cite>tf.keras.activations</cite> object,
+default to linear activation</p></li>
+<li><p><strong>bias</strong> – whether add bias or not, default to <cite>True</cite></p></li>
+<li><p><strong>multi_heads_reduction</strong> – how to reduce the outputs of multiple headers,
+expect “concat” or “mean”, default to “mean”</p></li>
+<li><p><strong>kwargs</strong> – args passed to <cite>tf.keras.layers.Layer</cite></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="rgcnconv-class">
+<h3>RGCNConv Class<a class="headerlink" href="#rgcnconv-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.layers.RGCNConv">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.layers.</span></span><span class="sig-name descname"><span class="pre">RGCNConv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.layers.RGCNConv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Relation GCN convolution layer.</p>
+<div class="math notranslate nohighlight">
+\[h_i^{(l+1)} = \sigma (\sum_{r \in \mathcal{R}}
+\sum_{j \in \mathcal{N}_i^r} \frac{1}{|\mathcal{N}_i|}
+\mathbf{W}_r^{(l)}h_j^{(l)} + \mathbf{W}_0^{(l)}h_i^{(l)})\]</div>
+<p>For basis regularizing,</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{W}_r^{(l)} = \sum_{b=1}^B a_{rb}^{(l)}V_b^{(l)}\]</div>
+<p>and for block regularizing</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{W}_r^{(l)} = \bigoplus_{b=1}^{B}Q_{br}^{(l)}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\bigoplus\)</span> is block-diagonal-composition operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_dims</strong> – input dimension</p></li>
+<li><p><strong>num_relations</strong> – number of the relation type</p></li>
+<li><p><strong>units</strong> – number of hidden units</p></li>
+<li><p><strong>regularizing</strong> – how to regularize the relation embedding,
+expected “basis” or “block”, default to “basis”</p></li>
+<li><p><strong>num_basis_block</strong> – the number of basis vectors or number of blocks,
+for “block” regularizing, <cite>num_basis_block</cite> should
+be divider of <cite>input_dims</cite> and <cite>units</cite></p></li>
+<li><p><strong>activation</strong> – layer activation, <cite>str</cite> or <cite>tf.keras.activations</cite> object,
+default to linear activation</p></li>
+<li><p><strong>bias</strong> – whether add bias or not, default to <cite>True</cite></p></li>
+<li><p><strong>kwargs</strong> – args passed to <cite>tf.keras.layers.Layer</cite></p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This layer suppose each edge in ego-graph must have one and only one
+attribute, which is the type of edge(relation).</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="unimp-class">
+<h3>UniMP Class<a class="headerlink" href="#unimp-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.layers.UniMP">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.layers.</span></span><span class="sig-name descname"><span class="pre">UniMP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.layers.UniMP" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://arxiv.org/pdf/2009.03509v5.pdf">Unified Message Passing Model</a>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+q_{c,i}^{(l)} &amp;= W_{c,q}^{(l)}h_{i}^{(l)} + b_{c,q}^{(l)} \\
+k_{c,j}^{(l)} &amp;= W_{c,k}^{(l)} + b_{c,k}^{(l)} \\
+e_{c,ij} &amp;= W_{c,e}e_{ij} + b_{c,e} \\
+\alpha_{c,ij}^{(l)} &amp;= \frac {exp(q_{c,i}^{(l)}
+\cdot (k_{c,j}^{(l)} + e_{c,ij}) / \sqrt{d})}{\sum_{u \in
+\mathcal{N}(i)}exp(q_{c,i}^{(l)} \cdot (k_{c,u}^{(l)} + e_{c,iu}) / \sqrt{d})} \\
+v_{c,j}^{(l)} &amp;= W_{c,v}^{(l)}h_j^{(l)} + b_{c,v}^{(l)}
+\end{aligned}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(d\)</span> is the number of hidden units.</p>
+<p>For multi-heads attention, when “mean” reduction is applied,</p>
+<div class="math notranslate nohighlight">
+\[\hat{h}_{i}^{(l+1)} = avg(\sum_{j \in \mathcal{N}(i)}
+\alpha_{c,ij}^{(l)}(v_{c,j}^{(l)} + e_{c,ij}))\]</div>
+<p>and when “concat” reduction is applied,</p>
+<div class="math notranslate nohighlight">
+\[\hat{h}_{i}^{(l+1)} = \mathop{||}\limits_{c=1}^{C}
+(\sum_{j \in \mathcal{N}(i)} \alpha_{c,ij}^{(l)}(v_{c,j}^{(l)} + e_{c,ij}))\]</div>
+<p>Add gated residual connection to prevent model from over-smothing,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+r_{i}^{(l)} &amp;= W_{r}^{l}h_{i}^{(l)} + b_{r}^{(l)} \\
+\beta_{i}^{(l)} &amp;= sigmoid(W_{g}^{(l)}[\hat{h}_{i}^{(l+1)}
+\mathop{||} r_{i}^{(l)} \mathop{||} (\hat{h}_{i}^{(l+1)}-r_{i}^{(l)})]) \\
+h_{i}^{(l+1)} &amp;= (1 - \beta_{i}^{l})\hat{h}_{i}^{(l+1)} + \beta_{i}^{l}r_{i}^{(l)}
+\end{aligned}\end{split}\]</div>
+<p>For “concat” reduction, layer normalization and relu activation will
+also be applied,</p>
+<div class="math notranslate nohighlight">
+\[h_{i}^{(l+1)} = ReLU(LayerNorm((1 - \beta_{i}^{l})\hat{h}_{i}^{(l+1)}
++ \beta_{i}^{l}r_{i}^{(l)}))\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>units</strong> – number of hidden units</p></li>
+<li><p><strong>num_heads</strong> – number of attention headers, default to 1</p></li>
+<li><p><strong>multi_heads_reduction</strong> – how to reduce the outputs of multiple headers,
+expect “concat” or “mean”, default to “mean”</p></li>
+<li><p><strong>kwargs</strong> – args passed to <cite>tf.keras.layers.Layer</cite></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="embeddingencoder-class">
+<h3>EmbeddingEncoder Class<a class="headerlink" href="#embeddingencoder-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.layers.EmbeddingEncoder">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.layers.</span></span><span class="sig-name descname"><span class="pre">EmbeddingEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.layers.EmbeddingEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Embedding lookup layer with reduction. This layer will not change the <cite>dict</cite> type
+of nodes &amp; edges attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of layer</p></li>
+<li><p><strong>cate_feat_def</strong> – sequence of <cite>tuple</cite> whose 1st elements are the name of attributes that will be applied
+embedding lookup, and 2nd element is a <cite>dict</cite> that specify args,
+including: <cite>reduction</cite>, how to reduce the embeddings of each
+sample, expected “max”, “min”, “sum” and “mean”, default to “mean”;
+other args required by <cite>tk.keras.layers.Embedding</cite>. Only the attributes
+whose name match the keys in <cite>cate_feat_def</cite> will be processed by
+the corresponding encoder.</p></li>
+<li><p><strong>kwargs</strong> – args passed to <cite>tf.keras.layers.Layer</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">emb</span> <span class="o">=</span> <span class="n">EmbeddingEncoder</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;embedding_encoder&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">[(</span><span class="s2">&quot;str_feat&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;reduction&quot;</span><span class="p">:</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;input_dim&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;output_dim&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">}),</span>
+<span class="gp">... </span>     <span class="p">(</span><span class="s2">&quot;int_feat&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;reduction&quot;</span><span class="p">:</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;input_dim&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;output_dim&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">}),]</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="onehotencoder-class">
+<h3>OnehotEncoder Class<a class="headerlink" href="#onehotencoder-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.layers.OnehotEncoder">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.layers.</span></span><span class="sig-name descname"><span class="pre">OnehotEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.layers.OnehotEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Onehot encoding layer. This layer will not change the <cite>dict</cite> type
+of nodes &amp; edges attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of layer</p></li>
+<li><p><strong>cate_feat_def</strong> – sequence of <cite>tuple</cite> whose 1st elements are the name of attributes that will be applied
+onehot encoding, and 2nd element is a <cite>dict</cite> that specify args,
+that required by <cite>tk.keras.layers.experimental.preprocessing.CategoryEncoding</cite>.
+Only the attributes whose name match the keys in <cite>cate_feat_def</cite>
+will be processed by the corresponding encoder.</p></li>
+<li><p><strong>kwargs</strong> – args passed to <cite>tf.keras.layers.Layer</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">onehot</span> <span class="o">=</span> <span class="n">OnehotEncoder</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;onehot_encoder&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">[(</span><span class="s2">&quot;int_feat&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_tokens&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}),</span> <span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="integerlookupencoder-class">
+<h3>IntegerLookupEncoder Class<a class="headerlink" href="#integerlookupencoder-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.layers.IntegerLookupEncoder">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.layers.</span></span><span class="sig-name descname"><span class="pre">IntegerLookupEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.layers.IntegerLookupEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integer lookup layer. This layer will not change the <cite>dict</cite> type
+of nodes &amp; edges attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of layer</p></li>
+<li><p><strong>cate_feat_def</strong> – sequence of <cite>tuple</cite> whose 1st elements are the name of attributes that will be applied
+integer lookup, and 2nd element is a <cite>dict</cite> that specify args,
+that required by <cite>tk.keras.layers.experimental.preprocessing.IntegerLookup</cite>.
+Only the attributes whose name match the keys in <cite>cate_feat_def</cite>
+will be processed by the corresponding encoder.</p></li>
+<li><p><strong>kwargs</strong> – args passed to <cite>tf.keras.layers.Layer</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">integer_lookup</span> <span class="o">=</span> <span class="n">IntegerLookupEncoder</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;integer_lookup&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">[(</span><span class="s2">&quot;int_feat&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;vocabulary&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span> <span class="s2">&quot;oov_token&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,}),</span> <span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="stringlookupencoder-class">
+<h3>StringLookupEncoder Class<a class="headerlink" href="#stringlookupencoder-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.layers.StringLookupEncoder">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.layers.</span></span><span class="sig-name descname"><span class="pre">StringLookupEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.layers.StringLookupEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>String lookup layer. This layer will not change the <cite>dict</cite> type
+of nodes &amp; edges attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of layer</p></li>
+<li><p><strong>cate_feat_def</strong> – sequence of <cite>tuple</cite> whose 1st elements are the name of attributes that will be applied
+string lookup, and 2nd element is a <cite>dict</cite> that specify args,
+that required by <cite>tk.keras.layers.experimental.preprocessing.StringLookup</cite>.
+Only the attributes whose name match the keys in <cite>cate_feat_def</cite>
+will be processed by the corresponding encoder.</p></li>
+<li><p><strong>kwargs</strong> – args passed to <cite>tf.keras.layers.Layer</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">string_lookup</span> <span class="o">=</span> <span class="n">StringLookupEncoder</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;string_lookup&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">[(</span><span class="s2">&quot;str_feat&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;vocabulary&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">],}),]</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="attrcompact-class">
+<h3>AttrCompact Class<a class="headerlink" href="#attrcompact-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.layers.AttrCompact">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.layers.</span></span><span class="sig-name descname"><span class="pre">AttrCompact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.layers.AttrCompact" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pre-processing layers that transform nodes &amp; edges attributes from <cite>dict</cite> of tensor
+into one compact tensor. Usually used as the last pre-processing layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mode</strong> – how to compact attributes, expected ‘concat’, ‘mean’ or ‘sum’, default to ‘concat’</p></li>
+<li><p><strong>name</strong> – name of layer</p></li>
+<li><p><strong>kwargs</strong> – args passed to <cite>tf.keras.layers.Layer</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">concat</span> <span class="o">=</span> <span class="n">AttrCompact</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;concat&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;concat&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="explainers">
+<h2>explainers<a class="headerlink" href="#explainers" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="integratedgradients-class">
+<h3>IntegratedGradients Class<a class="headerlink" href="#integratedgradients-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.explainer.IntegratedGradients">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.explainer.</span></span><span class="sig-name descname"><span class="pre">IntegratedGradients</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_steps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.explainer.IntegratedGradients" title="Permalink to this definition">¶</a></dt>
+<dd><p>A GNN model explainer based on <a class="reference external" href="https://arxiv.org/abs/1703.01365">IntegratedGradients</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – object of <a class="reference internal" href="#graph2tensor.model.models.MessagePassing" title="graph2tensor.model.models.MessagePassing"><code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.model.models.MessagePassing</span></code></a>, the model
+to be explained</p></li>
+<li><p><strong>baseline</strong> – <cite>dict</cite> whose keys are names of attributes and values are baseline of each
+attribute</p></li>
+<li><p><strong>n_steps</strong> – how many values to interpolate between baseline and instance</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.model.explainer.IntegratedGradients.explain">
+<span class="sig-name descname"><span class="pre">explain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_class</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.explainer.IntegratedGradients.explain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict inputs using model and explain results</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> – instances to predict and explain</p></li>
+<li><p><strong>target_class</strong> – index of target class</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>explanations and probabilities of target class</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="models">
+<h2>models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="messagepassing-class">
+<h3>MessagePassing Class<a class="headerlink" href="#messagepassing-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.models.MessagePassing">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.models.</span></span><span class="sig-name descname"><span class="pre">MessagePassing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.models.MessagePassing" title="Permalink to this definition">¶</a></dt>
+<dd><p>A model framework that implemented message-passing programing paradigm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>conv_layers</strong> – graph convolution layers, which receive a tuple
+(src, edge, dst, offset) as inputs and output
+aggregated messages from dst to each src。
+Since there are usually several paths in sub-graph
+and each path corresponding to a list of layers,
+<cite>conv_layers</cite> should contain several lists of layers.
+Different layer lists could be consisted of different layers
+to handle different paths within ego-graph distinctively</p></li>
+<li><p><strong>attr_reduce_mode</strong> – how to reduce attributes of nodes/edges, expected ‘concat’,
+‘mean’ or ‘sum’, default to ‘concat’</p></li>
+<li><p><strong>pre_proc_layers</strong> – feature pre-processing layers, the first layer of it receive a
+ego-graph tuple, see <code class="xref py py-class docutils literal notranslate"><span class="pre">graph2tensor.converter.Converter</span></code>
+for detail, the last layer outputs a ego-graph in which each
+path is represented as a tuple of hops, (hop#1, hop#2, hop#3),
+and each hop represented as (src, edge, dst, offset), in which
+src, edge and dst are 2-d tensor and offset is 1-d tensor.</p></li>
+<li><p><strong>reduce_layer</strong> – the layer reduce the message passed to centre nodes from each path
+in ego-graph, if not specified, mean pooling will be applied</p></li>
+<li><p><strong>out_layers</strong> – out layers, applied after convolution layers</p></li>
+<li><p><strong>name</strong> – the name of model</p></li>
+<li><p><strong>concat_hidden</strong> – whether concatenate the outputs of the last pre-processing layer
+and every convolution layer</p></li>
+<li><p><strong>kwargs</strong> – other args passed to super class</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="deepwalk-class">
+<h3>DeepWalk Class<a class="headerlink" href="#deepwalk-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.models.DeepWalk">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.models.</span></span><span class="sig-name descname"><span class="pre">DeepWalk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.models.DeepWalk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of <a class="reference external" href="https://arxiv.org/pdf/1403.6652.pdf">DeepWalk</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab_size</strong> – total number of nodes</p></li>
+<li><p><strong>embedding_dim</strong> – dimension of nodes embedding</p></li>
+<li><p><strong>num_ns</strong> – number of negative nodes</p></li>
+<li><p><strong>name</strong> – node of model</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.model.models.DeepWalk.get_node_embedding">
+<span class="sig-name descname"><span class="pre">get_node_embedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concat_target_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.models.DeepWalk.get_node_embedding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the embedding of given nodes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_indices</strong> – indices of nodes</p></li>
+<li><p><strong>concat_target_context</strong> – whether or not concatenate the context embeddings,
+if not, only target embeddings will be returned.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the embeddings of the given nodes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.model.models.DeepWalk.most_similar">
+<span class="sig-name descname"><span class="pre">most_similar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.models.DeepWalk.most_similar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return most <cite>topn</cite> similar nodes of given node based on
+the cosine similarities of node embeddings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_index</strong> – <cite>int</cite>, index of node</p></li>
+<li><p><strong>topn</strong> – how many nodes to return</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the most <cite>topn</cite> similar nodes indices and its similarities</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="node2vec-class">
+<h3>Node2Vec Class<a class="headerlink" href="#node2vec-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.models.Node2Vec">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.models.</span></span><span class="sig-name descname"><span class="pre">Node2Vec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.models.Node2Vec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of <a class="reference external" href="https://arxiv.org/pdf/1607.00653.pdf">Node2Vec</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab_size</strong> – total number of nodes</p></li>
+<li><p><strong>embedding_dim</strong> – dimension of nodes embedding</p></li>
+<li><p><strong>num_ns</strong> – number of negative nodes</p></li>
+<li><p><strong>name</strong> – node of model</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.model.models.Node2Vec.get_node_embedding">
+<span class="sig-name descname"><span class="pre">get_node_embedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concat_target_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.models.Node2Vec.get_node_embedding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the embedding of given nodes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_indices</strong> – indices of nodes</p></li>
+<li><p><strong>concat_target_context</strong> – whether or not concatenate the context embeddings,
+if not, only target embeddings will be returned.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the embeddings of the given nodes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.model.models.Node2Vec.most_similar">
+<span class="sig-name descname"><span class="pre">most_similar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.models.Node2Vec.most_similar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return most <cite>topn</cite> similar nodes of given node based on
+the cosine similarities of node embeddings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_index</strong> – <cite>int</cite>, index of node</p></li>
+<li><p><strong>topn</strong> – how many nodes to return</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the most <cite>topn</cite> similar nodes indices and its similarities</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="metapath2vec-class">
+<h3>MetaPath2Vec Class<a class="headerlink" href="#metapath2vec-class" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.model.models.MetaPath2Vec">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.model.models.</span></span><span class="sig-name descname"><span class="pre">MetaPath2Vec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.models.MetaPath2Vec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of <a class="reference external" href="https://ericdongyx.github.io/papers/KDD17-dong-chawla-swami-metapath2vec.pdf">MetaPath2Vec</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab_size</strong> – total number of nodes</p></li>
+<li><p><strong>embedding_dim</strong> – dimension of nodes embedding</p></li>
+<li><p><strong>num_ns</strong> – number of negative nodes</p></li>
+<li><p><strong>name</strong> – node of model</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.model.models.MetaPath2Vec.get_node_embedding">
+<span class="sig-name descname"><span class="pre">get_node_embedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concat_target_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.models.MetaPath2Vec.get_node_embedding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the embedding of given nodes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_indices</strong> – indices of nodes</p></li>
+<li><p><strong>concat_target_context</strong> – whether or not concatenate the context embeddings,
+if not, only target embeddings will be returned.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the embeddings of the given nodes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.model.models.MetaPath2Vec.most_similar">
+<span class="sig-name descname"><span class="pre">most_similar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.model.models.MetaPath2Vec.most_similar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return most <cite>topn</cite> similar nodes of given node based on
+the cosine similarities of node embeddings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_index</strong> – <cite>int</cite>, index of node</p></li>
+<li><p><strong>topn</strong> – how many nodes to return</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the most <cite>topn</cite> similar nodes indices and its similarities</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="graph2tensor.interface.html" class="btn btn-neutral float-right" title="Top Level API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="graph2tensor.converter.html" class="btn btn-neutral float-left" title="Converter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, liusx.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

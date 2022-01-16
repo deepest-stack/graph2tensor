@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Sampler &mdash; graph2tensor v0.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Converter" href="graph2tensor.converter.html" />
+    <link rel="prev" title="EgoGraph" href="graph2tensor.egograph.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> graph2tensor
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.client.html">Graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.common.html">Nodes &amp; Edges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.egograph.html">EgoGraph</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sampler</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#metapathsampler-class">MetaPathSampler Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#randomwalker-class">RandomWalker Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#node2vecwalker-class">Node2VecWalker Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metapathrandomwalker-class">MetaPathRandomWalker Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.converter.html">Converter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph2tensor.interface.html">Top Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="serving.html">Serving</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">graph2tensor</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Sampler</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/graph2tensor.sampler.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sampler">
+<h1>Sampler<a class="headerlink" href="#sampler" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="metapathsampler-class">
+<h2>MetaPathSampler Class<a class="headerlink" href="#metapathsampler-class" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.sampler.MetaPathSampler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.sampler.</span></span><span class="sig-name descname"><span class="pre">MetaPathSampler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expand_factors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategies</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.sampler.MetaPathSampler" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ego-graph sampler that samples ego-graph along with the paths specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> – graph to sample from</p></li>
+<li><p><strong>meta_paths</strong> – list of string which specifies sampling paths and
+each string in the list defined a meta-path.
+The pattern of the string should be something like:
+“(N1) -[E1]- (N2) -[E2]- (N2) -[E3]- (N3)”.
+It will define a path with 3 hops, along with edge types: E1 -&gt; E2 -&gt; E3.
+Each path defined in <cite>meta_paths</cite> should have same length, the src and dst node types
+of edges should match with graph schema, and the type of initial node of each path,
+i.e., the type of the centre nodes, should be consistent.
+To be a valid path, edge should have common node type with the adjacent edge in the path.</p></li>
+<li><p><strong>expand_factors</strong> – <cite>list</cite> or <cite>int</cite>, the number of neighbors to sample for each node at each hop.
+If pass an int, all hops in all paths use the same expand factor, if pass a list,
+it should match with the meta paths, i.e., same number of paths and same length of paths.</p></li>
+<li><p><strong>strategies</strong> – <cite>list</cite> or <cite>str</cite>, the sampling strategy at each hop.
+If pass a string, all hops in all paths use the same strategy, if pass a list,
+it should match with the meta paths, i.e., same number of paths and same length of paths.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.sampler.MetaPathSampler.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="graph2tensor.egograph.html#graph2tensor.egograph.EgoGraph" title="graph2tensor.egograph.egograph.EgoGraph"><span class="pre">graph2tensor.egograph.egograph.EgoGraph</span></a></span></span><a class="headerlink" href="#graph2tensor.sampler.MetaPathSampler.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sample ego-graphs start from ids</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> – the ids of the start nodes</p></li>
+<li><p><strong>kwargs</strong> – see <a class="reference internal" href="graph2tensor.client.html#graph2tensor.client.NumpyGraph.sample_neighbors" title="graph2tensor.client.NumpyGraph.sample_neighbors"><code class="xref py py-func docutils literal notranslate"><span class="pre">graph2tensor.client.NumpyGraph.sample_neighbors()</span></code></a> for details</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple whose element is 1-d <cite>np.ndarray</cite> which representing a walk path</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="randomwalker-class">
+<h2>RandomWalker Class<a class="headerlink" href="#randomwalker-class" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.sampler.RandomWalker">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.sampler.</span></span><span class="sig-name descname"><span class="pre">RandomWalker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_edge_probs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discard_frequent_nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq_th</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.sampler.RandomWalker" title="Permalink to this definition">¶</a></dt>
+<dd><p>A walker that perform random walk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> – the graph to sample from</p></li>
+<li><p><strong>edge_type</strong> – the type of edge to walk along</p></li>
+<li><p><strong>walk_length</strong> – the length to walk</p></li>
+<li><p><strong>use_edge_probs</strong> – whether use edge probabilities as neighbour’s distribution,
+if not or edge probabilities is not found, uniform
+distribution will be applied</p></li>
+<li><p><strong>discard_frequent_nodes</strong> – whether or not discard frequent nodes</p></li>
+<li><p><strong>freq_th</strong> – the frequency threshold for frequent nodes</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.sampler.RandomWalker.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#graph2tensor.sampler.RandomWalker.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform random walk starting from ids.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ids</strong> – the id of nodes to start walk from</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple whose element is list which representing a walk path</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="node2vecwalker-class">
+<h2>Node2VecWalker Class<a class="headerlink" href="#node2vecwalker-class" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.sampler.Node2VecWalker">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.sampler.</span></span><span class="sig-name descname"><span class="pre">Node2VecWalker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_edge_probs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discard_frequent_nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq_th</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.sampler.Node2VecWalker" title="Permalink to this definition">¶</a></dt>
+<dd><p>A walker that perform walk following the strategy described in
+<a class="reference external" href="https://arxiv.org/pdf/1607.00653.pdf">Node2Vec</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> – the graph to sample from</p></li>
+<li><p><strong>edge_type</strong> – the type of edge to walk along</p></li>
+<li><p><strong>walk_length</strong> – the length to walk</p></li>
+<li><p><strong>p</strong> – return parameter, see <a class="reference external" href="https://arxiv.org/pdf/1607.00653.pdf">Node2Vec</a>
+for more details</p></li>
+<li><p><strong>q</strong> – in-out parameter, see <a class="reference external" href="https://arxiv.org/pdf/1607.00653.pdf">Node2Vec</a>
+for more details</p></li>
+<li><p><strong>use_edge_probs</strong> – whether use edge probabilities as neighbour’s distribution,
+if not or edge probabilities is not found, uniform
+distribution will be applied</p></li>
+<li><p><strong>discard_frequent_nodes</strong> – whether or not discard frequent nodes</p></li>
+<li><p><strong>freq_th</strong> – the frequency threshold for frequent nodes</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.sampler.Node2VecWalker.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#graph2tensor.sampler.Node2VecWalker.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform node2vec walk starting from ids.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ids</strong> – the id of nodes to start walk from</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple whose element is list which representing a walk path</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="metapathrandomwalker-class">
+<h2>MetaPathRandomWalker Class<a class="headerlink" href="#metapathrandomwalker-class" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="graph2tensor.sampler.MetaPathRandomWalker">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">graph2tensor.sampler.</span></span><span class="sig-name descname"><span class="pre">MetaPathRandomWalker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_length</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.sampler.MetaPathRandomWalker" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="graph2tensor.sampler.MetaPathRandomWalker.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graph2tensor.sampler.MetaPathRandomWalker.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sample ego-graphs start from ids</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> – the ids of the start nodes</p></li>
+<li><p><strong>kwargs</strong> – see <a class="reference internal" href="graph2tensor.client.html#graph2tensor.client.NumpyGraph.sample_neighbors" title="graph2tensor.client.NumpyGraph.sample_neighbors"><code class="xref py py-func docutils literal notranslate"><span class="pre">graph2tensor.client.NumpyGraph.sample_neighbors()</span></code></a> for details</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple whose element is 1-d <cite>np.ndarray</cite> which representing a walk path</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="graph2tensor.converter.html" class="btn btn-neutral float-right" title="Converter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="graph2tensor.egograph.html" class="btn btn-neutral float-left" title="EgoGraph" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, liusx.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

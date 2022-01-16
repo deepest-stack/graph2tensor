@@ -1,0 +1,22 @@
+Serving
+=============================
+
+.. currentmodule:: app
+
+
+train
+---------------------------
+
+.. autofunction:: train
+
+
+predict
+---------------------------
+
+.. autofunction:: predict
+
+
+predict_and_explain
+---------------------------
+
+.. autofunction:: predict_and_explain

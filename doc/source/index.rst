@@ -1,0 +1,27 @@
+.. graph2tensor documentation master file, created by
+   sphinx-quickstart on Fri Aug 20 09:51:55 2021.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to graph2tensor's documentation!
+========================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: API Reference
+
+   api/graph2tensor.client
+   api/graph2tensor.common
+   api/graph2tensor.egograph
+   api/graph2tensor.sampler
+   api/graph2tensor.converter
+   api/graph2tensor.model
+   api/graph2tensor.interface
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
